@@ -2,8 +2,6 @@
 
 #include "utils/drawshape.h"
 
-#include <QMouseEvent>
-
 FlowFieldWidget::FlowFieldWidget(QWidget* parent)
 	: QWidget(parent)
 {
@@ -12,10 +10,14 @@ FlowFieldWidget::FlowFieldWidget(QWidget* parent)
 	m_imageWidget = ui.imageRenderer;
 	Q_ASSERT(m_imageWidget);
 
+	ui.map_comboBox->setCurrentIndex(0);
+	ui.width_spinbox->setValue(m_fieldWidth);
+	ui.height_spinbox->setValue(m_fieldHeight);
+	ui.showCells_checkbox->setChecked(m_showCells);
+	ui.cellSize_slider->setValue(m_cellSize * 100);
+
 	connect(m_imageWidget, &ImageRendererWidget::onPaintEvent, this, &FlowFieldWidget::onImagePaint, Qt::DirectConnection);
 	connect(m_imageWidget, &ImageRendererWidget::onDoubleClicked, this, &FlowFieldWidget::onImageDoubleClicked, Qt::DirectConnection);
-
-	onSetMap(0);
 }
 
 void FlowFieldWidget::onChangeFlowFieldWidth(int width)
@@ -52,7 +54,8 @@ void FlowFieldWidget::onSetMap(int mapIndex)
 		m_imageWidget->renderer().load(":/assets/images/FlowfieldMap.png", size());
 		break;
 	default:
-		break;
+		// Invalid index 
+		return;
 	}
 
 	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
@@ -92,7 +95,9 @@ void FlowFieldWidget::onResetField()
 void FlowFieldWidget::onImagePaint(QPainter& painter)
 {
 	if (m_showCells)
+	{
 		drawCellValues(painter);
+	}
 }
 
 void FlowFieldWidget::onImageDoubleClicked(QMouseEvent* event)
