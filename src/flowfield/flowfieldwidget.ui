@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>618</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
-       <widget class="QGroupBox" name="groupBox_settings">
+       <widget class="QGroupBox" name="settings_groupbox">
         <property name="title">
          <string>Flow Field Settings</string>
         </property>
@@ -35,28 +35,31 @@
          <item>
           <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0">
-            <widget class="QLabel" name="label_map">
+            <widget class="QLabel" name="map_label">
              <property name="text">
               <string>Map</string>
              </property>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_height">
+            <widget class="QLabel" name="height_label">
              <property name="text">
               <string>Height</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_width">
+            <widget class="QLabel" name="width_label">
              <property name="text">
               <string>Width</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="comboBox_map">
+            <widget class="QComboBox" name="map_comboBox">
+             <property name="currentIndex">
+              <number>-1</number>
+             </property>
              <item>
               <property name="text">
                <string>Simple Map</string>
@@ -65,41 +68,41 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QSpinBox" name="spinBox_width">
+            <widget class="QSpinBox" name="width_spinbox">
              <property name="minimum">
               <number>10</number>
              </property>
              <property name="maximum">
-              <number>200</number>
+              <number>1000</number>
              </property>
              <property name="singleStep">
               <number>10</number>
              </property>
              <property name="value">
-              <number>20</number>
+              <number>10</number>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QSpinBox" name="spinBox_height">
+            <widget class="QSpinBox" name="height_spinbox">
              <property name="minimum">
               <number>10</number>
              </property>
              <property name="maximum">
-              <number>200</number>
+              <number>1000</number>
              </property>
              <property name="singleStep">
               <number>10</number>
              </property>
              <property name="value">
-              <number>20</number>
+              <number>10</number>
              </property>
             </widget>
            </item>
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_reset">
+          <widget class="QPushButton" name="reset_button">
            <property name="text">
             <string>Reset Field</string>
            </property>
@@ -109,13 +112,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_visualization">
+       <widget class="QGroupBox" name="vis_groupbox">
         <property name="title">
          <string>Visualization</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QCheckBox" name="checkBox_showCells">
+          <widget class="QCheckBox" name="showCells_checkbox">
            <property name="text">
             <string>Show Cells</string>
            </property>
@@ -124,14 +127,17 @@
          <item>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="0" column="0">
-            <widget class="QLabel" name="label_cellSize">
+            <widget class="QLabel" name="cellSize_label">
              <property name="text">
               <string>Cell Size</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QSlider" name="slider_cellSize">
+            <widget class="QSlider" name="cellSize_slider">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="maximum">
               <number>100</number>
              </property>
@@ -149,34 +155,46 @@
           </layout>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_cellStats">
+          <widget class="QGroupBox" name="cellStats_groupbox">
            <property name="title">
             <string>Show Cell Stats</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QRadioButton" name="radioButton_travelCost">
+             <widget class="QRadioButton" name="travelCost_button">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Travel Cost</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_integrationCost">
+             <widget class="QRadioButton" name="intCost_button">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Integration Cost</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_flowDir">
+             <widget class="QRadioButton" name="flowDir_button">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Flow Direction</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_None">
+             <widget class="QRadioButton" name="none_button">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>None</string>
               </property>
@@ -221,7 +239,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>comboBox_map</sender>
+   <sender>map_comboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onSetMap(int)</slot>
@@ -237,7 +255,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox_width</sender>
+   <sender>width_spinbox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onChangeFlowFieldWidth(int)</slot>
@@ -253,13 +271,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox_height</sender>
+   <sender>height_spinbox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onChangeFlowFieldHeight(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>528</x>
+     <x>533</x>
      <y>113</y>
     </hint>
     <hint type="destinationlabel">
@@ -269,13 +287,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_reset</sender>
+   <sender>reset_button</sender>
    <signal>clicked()</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onResetField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
+     <x>487</x>
      <y>143</y>
     </hint>
     <hint type="destinationlabel">
@@ -285,13 +303,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_showCells</sender>
+   <sender>showCells_checkbox</sender>
    <signal>clicked(bool)</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onShowCells(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>466</x>
+     <x>487</x>
      <y>207</y>
     </hint>
     <hint type="destinationlabel">
@@ -301,13 +319,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>slider_cellSize</sender>
+   <sender>cellSize_slider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onSetCellSize(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>516</x>
+     <x>537</x>
      <y>234</y>
     </hint>
     <hint type="destinationlabel">
@@ -317,13 +335,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_travelCost</sender>
+   <sender>travelCost_button</sender>
    <signal>clicked()</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onShowTravelCosts()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>480</x>
+     <x>497</x>
      <y>286</y>
     </hint>
     <hint type="destinationlabel">
@@ -333,13 +351,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_integrationCost</sender>
+   <sender>intCost_button</sender>
    <signal>clicked()</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onShowIntegrationCosts()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
+     <x>497</x>
      <y>312</y>
     </hint>
     <hint type="destinationlabel">
@@ -349,13 +367,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_flowDir</sender>
+   <sender>flowDir_button</sender>
    <signal>clicked()</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onShowFlowDirection()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>480</x>
+     <x>497</x>
      <y>330</y>
     </hint>
     <hint type="destinationlabel">
@@ -365,18 +383,98 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_None</sender>
+   <sender>none_button</sender>
    <signal>clicked()</signal>
    <receiver>FlowFieldWidgetClass</receiver>
    <slot>onHideCosts()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>467</x>
-     <y>352</y>
+     <x>561</x>
+     <y>375</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
      <y>377</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showCells_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>none_button</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>542</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>561</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showCells_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>flowDir_button</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>541</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>333</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showCells_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>intCost_button</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
+     <y>204</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>535</x>
+     <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showCells_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>travelCost_button</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>519</x>
+     <y>204</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>522</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showCells_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>cellSize_slider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>513</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>537</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>

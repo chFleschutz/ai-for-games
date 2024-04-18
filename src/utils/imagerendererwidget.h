@@ -3,6 +3,7 @@
 #include "imagerenderer.h"
 
 #include <QWidget>
+#include <QMouseEvent>
 
 class ImageRendererWidget : public QWidget
 {

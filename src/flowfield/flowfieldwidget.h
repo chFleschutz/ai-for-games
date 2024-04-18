@@ -2,9 +2,10 @@
 
 #include "cellfield.h"
 #include "ui_flowfieldwidget.h"
+#include "utils/imagerendererwidget.h"
+
 #include <QPainter>
 #include <QWidget>
-#include "utils/imagerendererwidget.h"
 
 class FlowFieldWidget : public QWidget
 {
