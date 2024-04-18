@@ -1,22 +1,396 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>FlowFieldWidgetClass</class>
- <widget class="QWidget" name="FlowFieldWidgetClass" >
-  <property name="objectName" >
-   <string notr="true">FlowFieldWidgetClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QWidget" name="FlowFieldWidgetClass">
+  <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>600</width>
-	<height>400</height>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>FlowFieldWidget</string>
-  </property>$centralwidget$
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="ImageRendererWidget" name="imageRenderer" native="true"/>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_settings" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QGroupBox" name="groupBox_settings">
+        <property name="title">
+         <string>Flow Field Settings</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_map">
+             <property name="text">
+              <string>Map</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_height">
+             <property name="text">
+              <string>Height</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_width">
+             <property name="text">
+              <string>Width</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="comboBox_map">
+             <item>
+              <property name="text">
+               <string>Simple Map</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="spinBox_width">
+             <property name="minimum">
+              <number>10</number>
+             </property>
+             <property name="maximum">
+              <number>200</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="spinBox_height">
+             <property name="minimum">
+              <number>10</number>
+             </property>
+             <property name="maximum">
+              <number>200</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_reset">
+           <property name="text">
+            <string>Reset Field</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_visualization">
+        <property name="title">
+         <string>Visualization</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QCheckBox" name="checkBox_showCells">
+           <property name="text">
+            <string>Show Cells</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_cellSize">
+             <property name="text">
+              <string>Cell Size</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSlider" name="slider_cellSize">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="singleStep">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_cellStats">
+           <property name="title">
+            <string>Show Cell Stats</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QRadioButton" name="radioButton_travelCost">
+              <property name="text">
+               <string>Travel Cost</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_integrationCost">
+              <property name="text">
+               <string>Integration Cost</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_flowDir">
+              <property name="text">
+               <string>Flow Direction</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_None">
+              <property name="text">
+               <string>None</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
- <connections/>
-</UI>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ImageRendererWidget</class>
+   <extends>QWidget</extends>
+   <header>utils/imagerendererwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>comboBox_map</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onSetMap(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>540</x>
+     <y>59</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_width</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onChangeFlowFieldWidth(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>535</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_height</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onChangeFlowFieldHeight(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>528</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>414</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_reset</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onResetField()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>478</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>414</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_showCells</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onShowCells(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>466</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>413</x>
+     <y>206</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_cellSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onSetCellSize(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_travelCost</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onShowTravelCosts()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>480</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_integrationCost</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onShowIntegrationCosts()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>414</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_flowDir</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onShowFlowDirection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>480</x>
+     <y>330</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_None</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onHideCosts()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>414</x>
+     <y>377</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onChangeFlowFieldWidth(int)</slot>
+  <slot>onChangeFlowFieldHeight(int)</slot>
+  <slot>onShowCells(bool)</slot>
+  <slot>onSetCellSize(int)</slot>
+  <slot>onSetMap(int)</slot>
+  <slot>onShowTravelCosts()</slot>
+  <slot>onShowIntegrationCosts()</slot>
+  <slot>onShowFlowDirection()</slot>
+  <slot>onHideCosts()</slot>
+  <slot>onResetField()</slot>
+ </slots>
+</ui>

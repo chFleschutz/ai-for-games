@@ -9,20 +9,26 @@ FlowFieldWidget::FlowFieldWidget(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	m_imageWidget = ui.imageRenderer;
+	Q_ASSERT(m_imageWidget);
+
+	connect(m_imageWidget, &ImageRendererWidget::onPaintEvent, this, &FlowFieldWidget::onImagePaint, Qt::DirectConnection);
+	connect(m_imageWidget, &ImageRendererWidget::onDoubleClicked, this, &FlowFieldWidget::onImageDoubleClicked, Qt::DirectConnection);
+
 	onSetMap(0);
 }
 
 void FlowFieldWidget::onChangeFlowFieldWidth(int width)
 {
 	m_fieldWidth = width;
-	m_cellField.initialize(m_imageRenderer.originalImage(), m_fieldWidth, m_fieldHeight);
+	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
 	update();
 }
 
 void FlowFieldWidget::onChangeFlowFieldHeight(int height)
 {
 	m_fieldHeight = height;
-	m_cellField.initialize(m_imageRenderer.originalImage(), m_fieldWidth, m_fieldHeight);
+	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
 	update();
 }
 
@@ -43,13 +49,13 @@ void FlowFieldWidget::onSetMap(int mapIndex)
 	switch (mapIndex)
 	{
 	case 0:
-		m_imageRenderer.load(":/assets/images/FlowfieldMap.png", size());
+		m_imageWidget->renderer().load(":/assets/images/FlowfieldMap.png", size());
 		break;
 	default:
 		break;
 	}
 
-	m_cellField.initialize(m_imageRenderer.originalImage(), m_fieldWidth, m_fieldHeight);
+	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
 	update();
 }
 
@@ -83,26 +89,17 @@ void FlowFieldWidget::onResetField()
 	update();
 }
 
-void FlowFieldWidget::paintEvent(QPaintEvent* event)
+void FlowFieldWidget::onImagePaint(QPainter& painter)
 {
-	QPainter painter(this);
-	m_imageRenderer.draw(painter);
-
 	if (m_showCells)
 		drawCellValues(painter);
 }
 
-void FlowFieldWidget::resizeEvent(QResizeEvent* event)
-{
-	m_imageRenderer.resize(size());
-	update();
-}
-
-void FlowFieldWidget::mouseDoubleClickEvent(QMouseEvent* event)
+void FlowFieldWidget::onImageDoubleClicked(QMouseEvent* event)
 {
 	auto pos = event->pos();
-	auto percentX = pos.x() / static_cast<float>(m_imageRenderer.size().width());
-	auto percentY = pos.y() / static_cast<float>(m_imageRenderer.size().height());
+	auto percentX = pos.x() / static_cast<float>(m_imageWidget->renderer().size().width());
+	auto percentY = pos.y() / static_cast<float>(m_imageWidget->renderer().size().height());
 
 	if (percentX < 0.0f || percentX > 1.0f || percentY < 0.0f || percentY > 1.0f)
 		return;
@@ -117,8 +114,8 @@ void FlowFieldWidget::drawCellValues(QPainter& painter)
 {
 	painter.setRenderHint(QPainter::Antialiasing, true);
 
-	auto pixelPerCellX = static_cast<float>(m_imageRenderer.size().width()) / static_cast<float>(m_cellField.width());
-	auto pixelPerCellY = static_cast<float>(m_imageRenderer.size().height()) / static_cast<float>(m_cellField.height());
+	auto pixelPerCellX = static_cast<float>(m_imageWidget->renderer().size().width()) / static_cast<float>(m_cellField.width());
+	auto pixelPerCellY = static_cast<float>(m_imageWidget->renderer().size().height()) / static_cast<float>(m_cellField.height());
 	auto offsetX = pixelPerCellX / 2.0f;
 	auto offsetY = pixelPerCellY / 2.0f;
 

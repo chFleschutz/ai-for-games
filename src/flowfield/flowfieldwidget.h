@@ -4,7 +4,7 @@
 #include "ui_flowfieldwidget.h"
 #include <QPainter>
 #include <QWidget>
-#include "imagerenderer.h"
+#include "utils/imagerendererwidget.h"
 
 class FlowFieldWidget : public QWidget
 {
@@ -34,10 +34,8 @@ public slots:
 	void onHideCosts();
 	void onResetField();
 
-protected:
-	virtual void paintEvent(QPaintEvent* event) override;
-	virtual void resizeEvent(QResizeEvent* event) override;
-	virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void onImagePaint(QPainter& painter);
+	void onImageDoubleClicked(QMouseEvent* event);
 
 private:
 	void drawCellValues(QPainter& painter);
@@ -47,15 +45,13 @@ private:
 
 	Ui::FlowFieldWidgetClass ui;
 
-	ImageRenderer m_imageRenderer;
+	ImageRendererWidget* m_imageWidget = nullptr;
 
 	CellField m_cellField;
-
 	int m_fieldWidth = 20;
 	int m_fieldHeight = 20;
 
 	bool m_showCells = false;
 	float m_cellSize = 1.0f;
-
 	FlowFieldStats m_showCosts = STATS_HIDDEN;
 };
