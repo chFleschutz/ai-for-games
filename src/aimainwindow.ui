@@ -27,20 +27,73 @@
      <height>22</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionShow_Log"/>
+   </widget>
+   <widget class="QMenu" name="menuPathfinding">
+    <property name="title">
+     <string>Pathfinding</string>
+    </property>
+    <addaction name="actionFlow_Field"/>
+   </widget>
+   <addaction name="menuPathfinding"/>
+   <addaction name="menuDebug"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionShow_Log">
+   <property name="text">
+    <string>Show Log</string>
+   </property>
+  </action>
+  <action name="actionFlow_Field">
+   <property name="text">
+    <string>Flow Field</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionShow_Log</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowDebugOutput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFlow_Field</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowFlowField()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onShowDebugOutput()</slot>
+  <slot>onShowFlowField()</slot>
+ </slots>
 </ui>

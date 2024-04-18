@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/images/appicon.ico</file>
+        <file>assets/images/FlowfieldMap.png</file>
     </qresource>
 </RCC>

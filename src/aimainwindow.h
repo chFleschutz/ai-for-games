@@ -5,12 +5,18 @@
 
 class AIMainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    AIMainWindow(QWidget *parent = nullptr);
-    ~AIMainWindow();
+	AIMainWindow(QWidget* parent = nullptr);
+	~AIMainWindow() = default;
+
+public slots:
+	void onShowFlowField();
+	void onShowDebugOutput();
 
 private:
-    Ui::AIMainWindowClass ui;
+	void changeCentralWidget(QWidget* widget);
+
+	Ui::AIMainWindowClass ui;
 };
