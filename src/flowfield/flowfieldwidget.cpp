@@ -2,6 +2,9 @@
 
 #include "utils/drawshape.h"
 
+#include <QTimer>
+#include <random>
+
 FlowFieldWidget::FlowFieldWidget(QWidget* parent)
 	: QWidget(parent)
 {
@@ -16,34 +19,31 @@ FlowFieldWidget::FlowFieldWidget(QWidget* parent)
 	ui.showCells_checkbox->setChecked(m_showCells);
 	ui.cellSize_slider->setValue(m_cellSize * 100);
 
+	ui.agentCount_spinBox->setValue(m_agentCount);
+	ui.frozen_checkBox->setChecked(m_frozen);
+
 	connect(m_imageWidget, &ImageRendererWidget::onPaintEvent, this, &FlowFieldWidget::onImagePaint, Qt::DirectConnection);
 	connect(m_imageWidget, &ImageRendererWidget::onDoubleClicked, this, &FlowFieldWidget::onImageDoubleClicked, Qt::DirectConnection);
+	connect(m_imageWidget, &ImageRendererWidget::onResized, this, &FlowFieldWidget::onImageResized, Qt::DirectConnection);
+
+	auto timer = new QTimer(this);
+	connect(timer, &QTimer::timeout, this, &FlowFieldWidget::onAgentUpdate);
+	timer->start(1000 / 60); // 60 FPS
+	m_frameTimer.start();
 }
 
-void FlowFieldWidget::onChangeFlowFieldWidth(int width)
+FlowField::Coordinate FlowFieldWidget::pixelToCellCoord(const QPoint& pos) const
 {
-	m_fieldWidth = width;
-	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
-	update();
+	auto posX = pos.x() / m_pixelPerCell.x();
+	auto posY = pos.y() / m_pixelPerCell.y();
+	return FlowField::Coordinate{ static_cast<uint32_t>(posX), static_cast<uint32_t>(posY) };
 }
 
-void FlowFieldWidget::onChangeFlowFieldHeight(int height)
+FlowField::Coordinate FlowFieldWidget::pixelToCellCoord(const QVector2D& pos) const
 {
-	m_fieldHeight = height;
-	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
-	update();
-}
-
-void FlowFieldWidget::onShowCells(bool show)
-{
-	m_showCells = show;
-	update();
-}
-
-void FlowFieldWidget::onSetCellSize(int size)
-{
-	m_cellSize = size / 100.0f;
-	update();
+	auto posX = pos.x() / m_pixelPerCell.x();
+	auto posY = pos.y() / m_pixelPerCell.y();
+	return FlowField::Coordinate{ static_cast<uint32_t>(posX), static_cast<uint32_t>(posY) };
 }
 
 void FlowFieldWidget::onSetMap(int mapIndex)
@@ -58,7 +58,37 @@ void FlowFieldWidget::onSetMap(int mapIndex)
 		return;
 	}
 
-	m_cellField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
+	updateFlowField();
+}
+
+void FlowFieldWidget::onChangeFlowFieldWidth(int width)
+{
+	m_fieldWidth = width;
+	updateFlowField();
+}
+
+void FlowFieldWidget::onChangeFlowFieldHeight(int height)
+{
+	m_fieldHeight = height;
+	updateFlowField();
+}
+
+void FlowFieldWidget::onResetField()
+{
+	m_flowField.clearDestinations();
+	m_flowField.resetField();
+	update();
+}
+
+void FlowFieldWidget::onShowCells(bool show)
+{
+	m_showCells = show;
+	update();
+}
+
+void FlowFieldWidget::onSetCellSize(int size)
+{
+	m_cellSize = size / 100.0f;
 	update();
 }
 
@@ -86,11 +116,24 @@ void FlowFieldWidget::onHideCosts()
 	update();
 }
 
-void FlowFieldWidget::onResetField()
+void FlowFieldWidget::onSetAgentCount(int count)
 {
-	m_cellField.clearDestinations();
-	m_cellField.resetField();
-	update();
+	m_agentCount = count;
+}
+
+void FlowFieldWidget::onSpawnRandomAgents()
+{
+	m_agentManager.spawnRandomAgents(m_agentCount, m_imageWidget->renderer().image());
+}
+
+void FlowFieldWidget::onClearAgents()
+{
+	m_agentManager.clearAgents();
+}
+
+void FlowFieldWidget::onFreezeAgents(bool freeze)
+{
+	m_frozen = freeze;
 }
 
 void FlowFieldWidget::onImagePaint(QPainter& painter)
@@ -99,23 +142,41 @@ void FlowFieldWidget::onImagePaint(QPainter& painter)
 	{
 		drawCellValues(painter);
 	}
+
+	m_agentManager.drawAgents(painter);
 }
 
 void FlowFieldWidget::onImageDoubleClicked(QMouseEvent* event)
 {
-	auto pos = event->pos();
-	auto percentX = pos.x() / static_cast<float>(m_imageWidget->renderer().size().width());
-	auto percentY = pos.y() / static_cast<float>(m_imageWidget->renderer().size().height());
+	m_flowField.addDestination(pixelToCellCoord(event->pos()));
+	m_flowField.calc();
+	update();
+}
 
-	if (percentX < 0.0f || percentX > 1.0f || percentY < 0.0f || percentY > 1.0f)
+void FlowFieldWidget::onImageResized(QResizeEvent* event)
+{
+	setPixelPerCell();
+	update();
+}
+
+void FlowFieldWidget::onAgentUpdate()
+{
+	auto deltaTime = m_frameTimer.elapsed() / 1000.0f;
+	m_frameTimer.restart();
+
+	ui.fps->setText(QString::number(1.0f / deltaTime, 'f', 2));
+
+	if (m_frozen)
 		return;
 
-	auto cellX = static_cast<uint32_t>(percentX * m_cellField.width());
-	auto cellY = static_cast<uint32_t>(percentY * m_cellField.height());
+	m_agentManager.updateAgents(*this, deltaTime); 
+	update();
+}
 
-	m_cellField.addDestination(cellX, cellY);
-	m_cellField.calc();
-
+void FlowFieldWidget::updateFlowField()
+{
+	m_flowField.initialize(m_imageWidget->renderer().originalImage(), m_fieldWidth, m_fieldHeight);
+	setPixelPerCell();
 	update();
 }
 
@@ -123,21 +184,17 @@ void FlowFieldWidget::drawCellValues(QPainter& painter)
 {
 	painter.setRenderHint(QPainter::Antialiasing, true);
 
-	auto pixelPerCellX = static_cast<float>(m_imageWidget->renderer().size().width()) / static_cast<float>(m_cellField.width());
-	auto pixelPerCellY = static_cast<float>(m_imageWidget->renderer().size().height()) / static_cast<float>(m_cellField.height());
-	auto offsetX = pixelPerCellX / 2.0f;
-	auto offsetY = pixelPerCellY / 2.0f;
+	auto offset = m_pixelPerCell * 0.5f;
+	auto size = std::min(m_pixelPerCell.x(), m_pixelPerCell.y());
+	auto shapeSize = (m_pixelPerCell * m_cellSize).toPointF();
 
-	for (uint32_t y = 0; y < m_cellField.height(); y++)
+	for (uint32_t y = 0; y < m_flowField.height(); y++)
 	{
-		for (uint32_t x = 0; x < m_cellField.width(); x++)
+		for (uint32_t x = 0; x < m_flowField.width(); x++)
 		{
-			auto& cell = m_cellField.cell(x, y);
+			auto& cell = m_flowField.cell(x, y);
 			QColor color(cell.cost, cell.cost, cell.cost);
-
-			auto shapeWidth = pixelPerCellX * m_cellSize;
-			auto shapeHeight = pixelPerCellY * m_cellSize;
-			QRectF pointShape(-0.5f * shapeWidth, -0.5f * shapeHeight, shapeWidth, shapeHeight);
+			QRectF pointShape(-0.5f * shapeSize, 0.5f * shapeSize);
 
 			QPen pen(Qt::GlobalColor::green);
 			pen.setWidth(1);
@@ -150,19 +207,18 @@ void FlowFieldWidget::drawCellValues(QPainter& painter)
 			//painter.setBrush(brush);
 			painter.save();
 
-			auto posX = (x * pixelPerCellX) + offsetX;
-			auto posY = (y * pixelPerCellY) + offsetY;
+			auto posX = (x * m_pixelPerCell.x()) + offset.x();
+			auto posY = (y * m_pixelPerCell.y()) + offset.y();
 			painter.translate(posX, posY);
 			painter.drawEllipse(pointShape);
 			painter.restore();
 
-			auto size = std::min(pixelPerCellX, pixelPerCellY);
 			drawCosts(painter, cell, size, posX, posY);
 		}
 	}
 }
 
-void FlowFieldWidget::drawCosts(QPainter& painter, FlowField::Cell& cell, float cellSize, float posX, float posY)
+void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize, float posX, float posY)
 {
 	uint32_t displayValue = 0;
 	switch (m_showCosts)
@@ -207,4 +263,11 @@ int FlowFieldWidget::digits(int x, int base)
 float FlowFieldWidget::toAngle(const QVector2D& direction)
 {
 	return std::atan2(direction.y(), direction.x()) * 180.0f / static_cast<float>(M_PI);
+}
+
+void FlowFieldWidget::setPixelPerCell()
+{
+	auto pixelPerCellX = static_cast<float>(m_imageWidget->imageWidth()) / static_cast<float>(m_flowField.width());
+	auto pixelPerCellY = static_cast<float>(m_imageWidget->imageHeight()) / static_cast<float>(m_flowField.height());
+	m_pixelPerCell = QVector2D(pixelPerCellX, pixelPerCellY);
 }

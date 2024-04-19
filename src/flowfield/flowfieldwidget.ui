@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>618</width>
-    <height>420</height>
+    <width>648</width>
+    <height>842</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -210,6 +210,60 @@
        </widget>
       </item>
       <item>
+       <widget class="QGroupBox" name="agents_groupbox">
+        <property name="title">
+         <string>Agents</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="agentCount_label">
+             <property name="text">
+              <string>Agent Count</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="agentCount_spinBox">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="spawnAgents_pushButton">
+           <property name="text">
+            <string>Spawn Randomly</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearAgents_pushButton_2">
+           <property name="text">
+            <string>Clear Agents</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="frozen_checkBox">
+           <property name="text">
+            <string>Frozen</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -221,6 +275,27 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="fps_label">
+          <property name="text">
+           <string>FPS</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="fps">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -245,8 +320,8 @@
    <slot>onSetMap(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>540</x>
-     <y>59</y>
+     <x>618</x>
+     <y>66</y>
     </hint>
     <hint type="destinationlabel">
      <x>415</x>
@@ -261,8 +336,8 @@
    <slot>onChangeFlowFieldWidth(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>535</x>
-     <y>85</y>
+     <x>618</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>416</x>
@@ -277,8 +352,8 @@
    <slot>onChangeFlowFieldHeight(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>533</x>
-     <y>113</y>
+     <x>618</x>
+     <y>122</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -293,8 +368,8 @@
    <slot>onResetField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
-     <y>143</y>
+     <x>619</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -309,8 +384,8 @@
    <slot>onShowCells(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
-     <y>207</y>
+     <x>619</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
      <x>413</x>
@@ -325,8 +400,8 @@
    <slot>onSetCellSize(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>537</x>
-     <y>234</y>
+     <x>618</x>
+     <y>244</y>
     </hint>
     <hint type="destinationlabel">
      <x>415</x>
@@ -341,8 +416,8 @@
    <slot>onShowTravelCosts()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>497</x>
-     <y>286</y>
+     <x>609</x>
+     <y>297</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
@@ -357,8 +432,8 @@
    <slot>onShowIntegrationCosts()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>497</x>
-     <y>312</y>
+     <x>609</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -373,8 +448,8 @@
    <slot>onShowFlowDirection()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>497</x>
-     <y>330</y>
+     <x>609</x>
+     <y>349</y>
     </hint>
     <hint type="destinationlabel">
      <x>415</x>
@@ -389,7 +464,7 @@
    <slot>onHideCosts()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>561</x>
+     <x>609</x>
      <y>375</y>
     </hint>
     <hint type="destinationlabel">
@@ -405,11 +480,11 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>542</x>
-     <y>203</y>
+     <x>619</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
-     <x>561</x>
+     <x>609</x>
      <y>375</y>
     </hint>
    </hints>
@@ -421,12 +496,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>541</x>
-     <y>207</y>
+     <x>619</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
-     <x>550</x>
-     <y>333</y>
+     <x>609</x>
+     <y>349</y>
     </hint>
    </hints>
   </connection>
@@ -437,12 +512,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>532</x>
-     <y>204</y>
+     <x>619</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
-     <x>535</x>
-     <y>310</y>
+     <x>609</x>
+     <y>323</y>
     </hint>
    </hints>
   </connection>
@@ -453,12 +528,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>519</x>
-     <y>204</y>
+     <x>619</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
-     <x>522</x>
-     <y>290</y>
+     <x>609</x>
+     <y>297</y>
     </hint>
    </hints>
   </connection>
@@ -469,12 +544,76 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>513</x>
-     <y>210</y>
+     <x>619</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
-     <x>537</x>
-     <y>240</y>
+     <x>618</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spawnAgents_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onSpawnRandomAgents()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>619</x>
+     <y>481</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>549</x>
+     <y>474</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearAgents_pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onClearAgents()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>619</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>agentCount_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onSetAgentCount(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>618</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>568</x>
+     <y>442</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frozen_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>FlowFieldWidgetClass</receiver>
+   <slot>onFreezeAgents(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>523</x>
+     <y>530</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>528</y>
     </hint>
    </hints>
   </connection>
@@ -490,5 +629,9 @@
   <slot>onShowFlowDirection()</slot>
   <slot>onHideCosts()</slot>
   <slot>onResetField()</slot>
+  <slot>onSpawnRandomAgents()</slot>
+  <slot>onClearAgents()</slot>
+  <slot>onSetAgentCount(int)</slot>
+  <slot>onFreezeAgents(bool)</slot>
  </slots>
 </ui>

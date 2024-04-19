@@ -24,13 +24,20 @@ public:
 		std::array<Neighbor, 8> neighbors;
 	};
 
+	struct Coordinate
+	{
+		uint32_t x;
+		uint32_t y;
+	};
+
 	FlowField() = default;
 	~FlowField() = default;
 
 	void initialize(QImage& image);
 	void initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY);
 
-	void addDestination(int x, int y);
+	void addDestination(uint32_t x, uint32_t y);
+	void addDestination(const Coordinate& coordinate);
 
 	void calc();
 
@@ -40,7 +47,7 @@ public:
 	uint32_t width() const { return m_width; }
 	uint32_t height() const { return m_height; }
 
-	Cell& cell(uint32_t x, uint32_t y) { return m_field[x][y]; }
+	const Cell& cell(uint32_t x, uint32_t y) const { return m_field[x][y]; }
 
 private:
 	void setNeighbors();
@@ -53,5 +60,5 @@ private:
 	uint32_t m_height = 0;
 	std::vector<std::vector<Cell>> m_field;
 
-	std::vector<QPoint> m_destinationPoints;
+	std::vector<Coordinate> m_destinationPoints;
 };

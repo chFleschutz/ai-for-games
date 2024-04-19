@@ -15,10 +15,14 @@ public:
 
 	ImageRenderer& renderer() { return m_imageRenderer; }
 
+	int imageWidth() const { return m_imageRenderer.width(); }
+	int imageHeight() const { return m_imageRenderer.height(); }
+
 signals:
 	void onPaintEvent(QPainter& painter);
 	void onDoubleClicked(QMouseEvent* event);
 	void onClicked(QMouseEvent* event);
+	void onResized(QResizeEvent* event);
 
 protected:
 	void paintEvent(QPaintEvent* event) override;

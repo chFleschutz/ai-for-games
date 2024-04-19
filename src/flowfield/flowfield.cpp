@@ -1,5 +1,6 @@
 #include "flowfield.h"
 
+#include <QDebug>
 #include <deque>
 
 void FlowField::initialize(QImage& image)
@@ -18,17 +19,27 @@ void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCoun
 	for (auto& column : m_field)
 		column.resize(cellCountY);
 
+	clearDestinations();
 	resetField();
+
 	setNeighbors();
 	calcCostField(image);
 }
 
-void FlowField::addDestination(int x, int y)
+void FlowField::addDestination(uint32_t x, uint32_t y)
 {
-	if (x >= m_width || y >= m_height || x < 0 || y < 0)
-		return;
+	addDestination(Coordinate{ x, y });
+}
 
-	m_destinationPoints.emplace_back(x, y);
+void FlowField::addDestination(const Coordinate& coordinate)
+{
+	if (coordinate.x >= m_width || coordinate.y >= m_height)
+	{
+		qDebug() << "Could not add destination to flowfield, coordinate out of bounds";
+		return;
+	}
+
+	m_destinationPoints.emplace_back(coordinate);
 }
 
 void FlowField::calc()
@@ -121,7 +132,7 @@ void FlowField::calcIntegrationField()
 	std::deque<Cell*> openList;
 	for (auto& dest : m_destinationPoints)
 	{
-		auto& destCell = m_field[dest.x()][dest.y()];
+		auto& destCell = m_field[dest.x][dest.y];
 		destCell.integrationCost = 0;
 		openList.push_back(&destCell);
 	}
@@ -184,7 +195,7 @@ void FlowField::calcFlowField()
 	// Disable flow direction for destination cells
 	for (auto& dest : m_destinationPoints)
 	{
-		auto& destCell = m_field[dest.x()][dest.y()];
+		auto& destCell = m_field[dest.x][dest.y];
 		destCell.flowDirection = QVector2D(0.0f, 0.0f);
 	}
 }
