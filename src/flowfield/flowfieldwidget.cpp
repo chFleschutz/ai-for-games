@@ -158,7 +158,7 @@ void FlowFieldWidget::drawCellValues(QPainter& painter)
 	}
 }
 
-void FlowFieldWidget::drawCosts(QPainter& painter, CellField::Cell& cell, float cellSize, float posX, float posY)
+void FlowFieldWidget::drawCosts(QPainter& painter, FlowField::Cell& cell, float cellSize, float posX, float posY)
 {
 	uint32_t displayValue = 0;
 	switch (m_showCosts)

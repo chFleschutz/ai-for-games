@@ -40,7 +40,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\flowfield\cellfield.cpp">
+    <ClCompile Include="src\flowfield\flowfield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\flowfield\flowfieldwidget.cpp">
@@ -54,7 +54,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\flowfield\cellfield.h">
+    <ClInclude Include="src\flowfield\flowfield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\drawshape.h">

@@ -105,14 +105,14 @@
     <QtUic Include="src\aimainwindow.ui" />
     <QtMoc Include="src\aimainwindow.h" />
     <ClCompile Include="src\aimainwindow.cpp" />
-    <ClCompile Include="src\flowfield\cellfield.cpp" />
+    <ClCompile Include="src\flowfield\flowfield.cpp" />
     <ClCompile Include="src\flowfield\flowfieldwidget.cpp" />
     <ClCompile Include="src\main.cpp" />
     <QtUic Include="src\flowfield\flowfieldwidget.ui" />
     <QtUic Include="src\utils\debugoutputdialog.ui" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\flowfield\cellfield.h" />
+    <ClInclude Include="src\flowfield\flowfield.h" />
     <ClInclude Include="src\utils\imagerenderer.h" />
     <QtMoc Include="src\utils\imagerendererwidget.h" />
     <ClInclude Include="src\utils\drawshape.h" />

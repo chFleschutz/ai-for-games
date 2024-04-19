@@ -6,7 +6,7 @@
 #include <vector>
 #include <array>
 
-class CellField
+class FlowField
 {
 public:
 	struct Cell
@@ -24,8 +24,8 @@ public:
 		std::array<Neighbor, 8> neighbors;
 	};
 
-	CellField() = default;
-	~CellField() = default;
+	FlowField() = default;
+	~FlowField() = default;
 
 	void initialize(QImage& image);
 	void initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY);

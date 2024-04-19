@@ -1,14 +1,14 @@
-#include "cellfield.h"
+#include "flowfield.h"
 
 #include <deque>
 
-void CellField::initialize(QImage& image)
+void FlowField::initialize(QImage& image)
 {
 	Q_ASSERT_X(m_width > 0 && m_height > 0, "CellField::initialize", "Width and height must be greater than 0");
 	initialize(image, m_width, m_height);
 }
 
-void CellField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY)
+void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY)
 {
 	m_width = cellCountX;
 	m_height = cellCountY;
@@ -23,7 +23,7 @@ void CellField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCoun
 	calcCostField(image);
 }
 
-void CellField::calcFlowField(uint32_t destX, uint32_t destY)
+void FlowField::calcFlowField(uint32_t destX, uint32_t destY)
 {
 	m_destinationX = destX;
 	m_destinationY = destY;
@@ -34,7 +34,7 @@ void CellField::calcFlowField(uint32_t destX, uint32_t destY)
 	calcFlowField();
 }
 
-void CellField::reset()
+void FlowField::reset()
 {
 	for (auto& column : m_field)
 	{
@@ -46,7 +46,7 @@ void CellField::reset()
 	}
 }
 
-void CellField::setNeighbors()
+void FlowField::setNeighbors()
 {
 	std::array<int, 8> dx = { -1, 0, 1, -1, 1, -1, 0, 1 };
 	std::array<int, 8> dy = { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -73,7 +73,7 @@ void CellField::setNeighbors()
 	}
 }
 
-void CellField::calcCostField(QImage& image)
+void FlowField::calcCostField(QImage& image)
 {
 	auto pixelPerCellX = static_cast<float>(image.width()) / static_cast<float>(m_width);
 	auto pixelPerCellY = static_cast<float>(image.height()) / static_cast<float>(m_height);
@@ -104,7 +104,7 @@ void CellField::calcCostField(QImage& image)
 	}
 }
 
-void CellField::calcIntegrationField()
+void FlowField::calcIntegrationField()
 {
 	// Breadth first search to calculate the cost to reach each cell from the start cell
 	auto& startCell = m_field[m_destinationX][m_destinationY];
@@ -133,7 +133,7 @@ void CellField::calcIntegrationField()
 	}
 }
 
-void CellField::calcFlowField()
+void FlowField::calcFlowField()
 {
 	for (auto& column : m_field)
 	{

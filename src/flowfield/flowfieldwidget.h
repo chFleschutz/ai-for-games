@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cellfield.h"
+#include "flowfield.h"
 #include "ui_flowfieldwidget.h"
 #include "utils/imagerendererwidget.h"
 
@@ -40,7 +40,7 @@ public slots:
 
 private:
 	void drawCellValues(QPainter& painter);
-	void drawCosts(QPainter& painter, CellField::Cell& cell, float cellSize, float posX, float posY);
+	void drawCosts(QPainter& painter, FlowField::Cell& cell, float cellSize, float posX, float posY);
 	int digits(int x, int base = 10);
 	float toAngle(const QVector2D& direction);
 
@@ -48,7 +48,7 @@ private:
 
 	ImageRendererWidget* m_imageWidget = nullptr;
 
-	CellField m_cellField;
+	FlowField m_cellField;
 	int m_fieldWidth = 20;
 	int m_fieldHeight = 20;
 
