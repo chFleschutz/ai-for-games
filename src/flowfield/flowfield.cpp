@@ -18,23 +18,31 @@ void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCoun
 	for (auto& column : m_field)
 		column.resize(cellCountY);
 
-	reset();
+	resetField();
 	setNeighbors();
 	calcCostField(image);
 }
 
-void FlowField::calcFlowField(uint32_t destX, uint32_t destY)
+void FlowField::addDestination(int x, int y)
 {
-	m_destinationX = destX;
-	m_destinationY = destY;
+	if (x >= m_width || y >= m_height || x < 0 || y < 0)
+		return;
 
-	reset();
+	m_destinationPoints.emplace_back(x, y);
+}
+
+void FlowField::calc()
+{
+	if (m_destinationPoints.empty())
+		return;
+
+	resetField();
 
 	calcIntegrationField();
 	calcFlowField();
 }
 
-void FlowField::reset()
+void FlowField::resetField()
 {
 	for (auto& column : m_field)
 	{
@@ -44,6 +52,11 @@ void FlowField::reset()
 			cell.flowDirection = QVector2D(0.0f, 0.0f);
 		}
 	}
+}
+
+void FlowField::clearDestinations()
+{
+	m_destinationPoints.clear();
 }
 
 void FlowField::setNeighbors()
@@ -90,10 +103,7 @@ void FlowField::calcCostField(QImage& image)
 				for (uint32_t pixelX = pixelOffsetX; pixelX < pixelOffsetX + pixelPerCellX; pixelX++)
 				{
 					auto color = image.pixel(pixelX, pixelY);
-					auto value = qRed(color); // Use red channel
-					if (value < 250)		  // Use 255 as a barrier 
-						value /= m_colorFactor;		  // Normalize to 0-5
-					maxValue = std::max(maxValue, value); 
+					maxValue = std::max(maxValue, mapColorToCost(color)); 
 				}
 			}
 
@@ -107,11 +117,14 @@ void FlowField::calcCostField(QImage& image)
 void FlowField::calcIntegrationField()
 {
 	// Breadth first search to calculate the cost to reach each cell from the start cell
-	auto& startCell = m_field[m_destinationX][m_destinationY];
-	startCell.integrationCost = 0;
 
 	std::deque<Cell*> openList;
-	openList.push_back(&startCell);
+	for (auto& dest : m_destinationPoints)
+	{
+		auto& destCell = m_field[dest.x()][dest.y()];
+		destCell.integrationCost = 0;
+		openList.push_back(&destCell);
+	}
 
 	while (!openList.empty())
 	{
@@ -168,6 +181,18 @@ void FlowField::calcFlowField()
 		}
 	}
 
-	auto& destinationCell = m_field[m_destinationX][m_destinationY];
-	destinationCell.flowDirection = QVector2D(0.0f, 0.0f);
+	// Disable flow direction for destination cells
+	for (auto& dest : m_destinationPoints)
+	{
+		auto& destCell = m_field[dest.x()][dest.y()];
+		destCell.flowDirection = QVector2D(0.0f, 0.0f);
+	}
+}
+
+int FlowField::mapColorToCost(QRgb color) const
+{
+	auto value = qRed(color);
+	if (value < 250)
+		value /= 50.0f;
+	return value;
 }

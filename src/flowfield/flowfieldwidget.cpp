@@ -88,7 +88,8 @@ void FlowFieldWidget::onHideCosts()
 
 void FlowFieldWidget::onResetField()
 {
-	m_cellField.reset();
+	m_cellField.clearDestinations();
+	m_cellField.resetField();
 	update();
 }
 
@@ -111,7 +112,10 @@ void FlowFieldWidget::onImageDoubleClicked(QMouseEvent* event)
 
 	auto cellX = static_cast<uint32_t>(percentX * m_cellField.width());
 	auto cellY = static_cast<uint32_t>(percentY * m_cellField.height());
-	m_cellField.calcFlowField(cellX, cellY);
+
+	m_cellField.addDestination(cellX, cellY);
+	m_cellField.calc();
+
 	update();
 }
 

@@ -30,29 +30,28 @@ public:
 	void initialize(QImage& image);
 	void initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY);
 
-	void calcFlowField(uint32_t destX, uint32_t destY);
+	void addDestination(int x, int y);
 
-	void reset();
+	void calc();
+
+	void resetField();
+	void clearDestinations();
 
 	uint32_t width() const { return m_width; }
 	uint32_t height() const { return m_height; }
 
 	Cell& cell(uint32_t x, uint32_t y) { return m_field[x][y]; }
 
-	float colorFactor() const { return m_colorFactor; }
-
 private:
 	void setNeighbors();
 	void calcCostField(QImage& image);
 	void calcIntegrationField();
 	void calcFlowField();
+	int mapColorToCost(QRgb color) const;
 
-	uint32_t m_width = 1;
-	uint32_t m_height = 1;
+	uint32_t m_width = 0;
+	uint32_t m_height = 0;
 	std::vector<std::vector<Cell>> m_field;
 
-	uint32_t m_destinationX = 0;
-	uint32_t m_destinationY = 0;
-
-	float m_colorFactor = 50.0f;
+	std::vector<QPoint> m_destinationPoints;
 };
