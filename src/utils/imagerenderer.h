@@ -46,7 +46,12 @@ public:
 	QImage& originalImage() { return m_originalImage; }
 
 	QSize size() const { return m_image.size(); }
+	int width() const { return m_image.width(); }
+	int height() const { return m_image.height(); }
+	
 	QSize originalSize() const { return m_originalImage.size(); }
+	int originalWidth() const { return m_originalImage.width(); }
+	int originalHeight() const { return m_originalImage.height(); }
 
 private:
 	QImage m_originalImage;

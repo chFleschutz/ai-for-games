@@ -17,6 +17,8 @@ void ImageRendererWidget::resizeEvent(QResizeEvent* event)
 {
 	m_imageRenderer.resize(size());
 	update();
+
+	emit onResized(event);
 }
 
 void ImageRendererWidget::mouseDoubleClickEvent(QMouseEvent* event)

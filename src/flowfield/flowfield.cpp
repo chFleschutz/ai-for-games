@@ -1,14 +1,15 @@
-#include "cellfield.h"
+#include "flowfield.h"
 
+#include <QDebug>
 #include <deque>
 
-void CellField::initialize(QImage& image)
+void FlowField::initialize(QImage& image)
 {
 	Q_ASSERT_X(m_width > 0 && m_height > 0, "CellField::initialize", "Width and height must be greater than 0");
 	initialize(image, m_width, m_height);
 }
 
-void CellField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY)
+void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY)
 {
 	m_width = cellCountX;
 	m_height = cellCountY;
@@ -18,23 +19,41 @@ void CellField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCoun
 	for (auto& column : m_field)
 		column.resize(cellCountY);
 
-	reset();
+	clearDestinations();
+	resetField();
+
 	setNeighbors();
 	calcCostField(image);
 }
 
-void CellField::calcFlowField(uint32_t destX, uint32_t destY)
+void FlowField::addDestination(uint32_t x, uint32_t y)
 {
-	m_destinationX = destX;
-	m_destinationY = destY;
+	addDestination(Coordinate{ x, y });
+}
 
-	reset();
+void FlowField::addDestination(const Coordinate& coordinate)
+{
+	if (coordinate.x >= m_width || coordinate.y >= m_height)
+	{
+		qDebug() << "Could not add destination to flowfield, coordinate out of bounds";
+		return;
+	}
+
+	m_destinationPoints.emplace_back(coordinate);
+}
+
+void FlowField::calc()
+{
+	if (m_destinationPoints.empty())
+		return;
+
+	resetField();
 
 	calcIntegrationField();
 	calcFlowField();
 }
 
-void CellField::reset()
+void FlowField::resetField()
 {
 	for (auto& column : m_field)
 	{
@@ -46,7 +65,12 @@ void CellField::reset()
 	}
 }
 
-void CellField::setNeighbors()
+void FlowField::clearDestinations()
+{
+	m_destinationPoints.clear();
+}
+
+void FlowField::setNeighbors()
 {
 	std::array<int, 8> dx = { -1, 0, 1, -1, 1, -1, 0, 1 };
 	std::array<int, 8> dy = { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -73,7 +97,7 @@ void CellField::setNeighbors()
 	}
 }
 
-void CellField::calcCostField(QImage& image)
+void FlowField::calcCostField(QImage& image)
 {
 	auto pixelPerCellX = static_cast<float>(image.width()) / static_cast<float>(m_width);
 	auto pixelPerCellY = static_cast<float>(image.height()) / static_cast<float>(m_height);
@@ -90,10 +114,7 @@ void CellField::calcCostField(QImage& image)
 				for (uint32_t pixelX = pixelOffsetX; pixelX < pixelOffsetX + pixelPerCellX; pixelX++)
 				{
 					auto color = image.pixel(pixelX, pixelY);
-					auto value = qRed(color); // Use red channel
-					if (value < 250)		  // Use 255 as a barrier 
-						value /= m_colorFactor;		  // Normalize to 0-5
-					maxValue = std::max(maxValue, value); 
+					maxValue = std::max(maxValue, mapColorToCost(color)); 
 				}
 			}
 
@@ -104,14 +125,17 @@ void CellField::calcCostField(QImage& image)
 	}
 }
 
-void CellField::calcIntegrationField()
+void FlowField::calcIntegrationField()
 {
 	// Breadth first search to calculate the cost to reach each cell from the start cell
-	auto& startCell = m_field[m_destinationX][m_destinationY];
-	startCell.integrationCost = 0;
 
 	std::deque<Cell*> openList;
-	openList.push_back(&startCell);
+	for (auto& dest : m_destinationPoints)
+	{
+		auto& destCell = m_field[dest.x][dest.y];
+		destCell.integrationCost = 0;
+		openList.push_back(&destCell);
+	}
 
 	while (!openList.empty())
 	{
@@ -133,7 +157,7 @@ void CellField::calcIntegrationField()
 	}
 }
 
-void CellField::calcFlowField()
+void FlowField::calcFlowField()
 {
 	for (auto& column : m_field)
 	{
@@ -168,6 +192,18 @@ void CellField::calcFlowField()
 		}
 	}
 
-	auto& destinationCell = m_field[m_destinationX][m_destinationY];
-	destinationCell.flowDirection = QVector2D(0.0f, 0.0f);
+	// Disable flow direction for destination cells
+	for (auto& dest : m_destinationPoints)
+	{
+		auto& destCell = m_field[dest.x][dest.y];
+		destCell.flowDirection = QVector2D(0.0f, 0.0f);
+	}
+}
+
+int FlowField::mapColorToCost(QRgb color) const
+{
+	auto value = qRed(color);
+	if (value < 250)
+		value /= 50.0f;
+	return value;
 }

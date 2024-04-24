@@ -1,6 +1,7 @@
 #include "debugoutputdialog.h"
 
 #include <QTime>
+#include <QScrollBar>
 
 QTextEdit* DebugOutputDialog::s_displayText = nullptr;
 
@@ -17,6 +18,7 @@ DebugOutputDialog::DebugOutputDialog(QWidget *parent)
 DebugOutputDialog::~DebugOutputDialog()
 {
 	qInstallMessageHandler(m_originalHandler);
+	s_displayText = nullptr;
 }
 
 void DebugOutputDialog::messageHandler(QtMsgType type, const QMessageLogContext & context, const QString & msg)
@@ -53,4 +55,5 @@ void DebugOutputDialog::messageHandler(QtMsgType type, const QMessageLogContext 
 
 	QString text = QString("%1: %2\n").arg(QTime::currentTime().toString("hh:mm:ss.zzz")).arg(msg);
 	s_displayText->insertPlainText(text);
+	s_displayText->verticalScrollBar()->setValue(s_displayText->verticalScrollBar()->maximum());
 }
