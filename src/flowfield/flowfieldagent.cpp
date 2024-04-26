@@ -60,13 +60,13 @@ void AgentManager::updateAgents(const FlowFieldWidget& flowFieldWidget, float de
 
 void AgentManager::drawAgents(QPainter& painter) const
 {
-	QPen pen(Qt::darkGray);
+	QPen pen(QColor(0, 255, 255, 200));
 	pen.setWidth(1);
 	pen.setStyle(Qt::PenStyle::SolidLine);
 
 	QBrush brush;
 	brush.setStyle(Qt::BrushStyle::SolidPattern);
-	brush.setColor(Qt::cyan);
+	brush.setColor(QColor(0, 255, 255, 200));
 
 	painter.setPen(pen);
 	painter.setBrush(brush);

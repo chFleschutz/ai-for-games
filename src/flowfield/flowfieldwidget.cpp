@@ -138,8 +138,6 @@ void FlowFieldWidget::onFreezeAgents(bool freeze)
 
 void FlowFieldWidget::onImagePaint(QPainter& painter)
 {
-	painter.setRenderHint(QPainter::Antialiasing, true);
-
 	if (m_showCells)
 		drawCellValues(painter);
 
@@ -182,37 +180,44 @@ void FlowFieldWidget::updateFlowField()
 
 void FlowFieldWidget::drawCellValues(QPainter& painter)
 {
-	auto offset = m_pixelPerCell * 0.5f;
-	auto size = std::min(m_pixelPerCell.x(), m_pixelPerCell.y());
-	auto shapeSize = (m_pixelPerCell * m_cellSize).toPointF();
+	painter.save();
+	painter.setRenderHint(QPainter::Antialiasing, true);
 
 	QPen pen(Qt::GlobalColor::green);
 	pen.setWidth(1);
 	pen.setStyle(Qt::PenStyle::SolidLine);
 	painter.setPen(pen);
 
+	auto offset = m_pixelPerCell * 0.5f;
+	auto size = std::min(m_pixelPerCell.x(), m_pixelPerCell.y());
+	auto shapeSize = (m_pixelPerCell * m_cellSize).toPointF();
+	painter.translate(offset.x(), offset.y());
+
 	for (uint32_t y = 0; y < m_flowField.height(); y++)
 	{
+		painter.save();
+
 		for (uint32_t x = 0; x < m_flowField.width(); x++)
 		{
 			const auto& cell = m_flowField.cellAt(x, y);
 			QColor color(cell.cost, cell.cost, cell.cost);
 			QRectF pointShape(-0.5f * shapeSize, 0.5f * shapeSize);
 
-			painter.save();
-
-			auto posX = (x * m_pixelPerCell.x()) + offset.x();
-			auto posY = (y * m_pixelPerCell.y()) + offset.y();
-			painter.translate(posX, posY);
 			painter.drawEllipse(pointShape);
-			painter.restore();
 
-			drawCosts(painter, cell, size, posX, posY);
+			drawCosts(painter, cell, size);
+
+			painter.translate(m_pixelPerCell.x(), 0);
 		}
+
+		painter.restore();
+		painter.translate(0, m_pixelPerCell.y());
 	}
+
+	painter.restore();
 }
 
-void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize, float posX, float posY)
+void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize)
 {
 	uint32_t displayValue = 0;
 	switch (m_showCosts)
@@ -226,9 +231,7 @@ void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, 
 	case FlowFieldWidget::FLOW_DIRECTION:
 		if (cell.flowDirection.length() > 0.0f)
 		{
-			painter.translate(posX, posY);
 			DrawShape::Arrow(painter, 0.7f * cellSize, toAngle(cell.flowDirection));
-			painter.translate(-posX, -posY);
 		}
 		return;
 	case FlowFieldWidget::STATS_HIDDEN:
@@ -238,8 +241,8 @@ void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, 
 		break;
 	}
 
-	auto shift = 2.0f * digits(displayValue);
-	painter.drawText(QPointF(posX - shift, posY + 4), QString::number(displayValue));
+	auto shift = -2.0f * digits(displayValue);
+	painter.drawText(QPointF(shift, 4), QString::number(displayValue));
 }
 
 int FlowFieldWidget::digits(int x, int base)

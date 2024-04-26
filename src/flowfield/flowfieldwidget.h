@@ -57,7 +57,7 @@ public slots:
 private:
 	void updateFlowField();
 	void drawCellValues(QPainter& painter);
-	void drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize, float posX, float posY);
+	void drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize);
 	int digits(int x, int base = 10);
 	float toAngle(const QVector2D& direction);
 	void setPixelPerCell();
