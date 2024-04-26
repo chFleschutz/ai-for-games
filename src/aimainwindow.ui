@@ -39,7 +39,14 @@
     </property>
     <addaction name="actionFlow_Field"/>
    </widget>
+   <widget class="QMenu" name="menuLearn_Algorithms">
+    <property name="title">
+     <string>Learn Algorithms</string>
+    </property>
+    <addaction name="actionHill_Climbing"/>
+   </widget>
    <addaction name="menuPathfinding"/>
+   <addaction name="menuLearn_Algorithms"/>
    <addaction name="menuDebug"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -51,6 +58,11 @@
   <action name="actionFlow_Field">
    <property name="text">
     <string>Flow Field</string>
+   </property>
+  </action>
+  <action name="actionHill_Climbing">
+   <property name="text">
+    <string>Hill Climbing</string>
    </property>
   </action>
  </widget>
@@ -91,9 +103,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionHill_Climbing</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowHillClimbing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onShowDebugOutput()</slot>
   <slot>onShowFlowField()</slot>
+  <slot>onShowHillClimbing()</slot>
  </slots>
 </ui>

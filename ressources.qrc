@@ -2,5 +2,10 @@
     <qresource prefix="/">
         <file>assets/images/appicon.ico</file>
         <file>assets/images/FlowfieldMap.png</file>
+        <file>assets/data_sets/data_set_1.txt</file>
+        <file>assets/data_sets/data_set_2.txt</file>
+        <file>assets/data_sets/data_set_3.txt</file>
+        <file>assets/data_sets/data_set_4.txt</file>
+        <file>assets/data_sets/random_set.txt</file>
     </qresource>
 </RCC>

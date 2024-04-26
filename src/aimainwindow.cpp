@@ -1,7 +1,8 @@
 #include "aimainwindow.h"
 
-#include "utils/debugoutputdialog.h"
 #include "flowfield/flowfieldwidget.h"
+#include "hillclimbing/hillclimbingwidget.h"
+#include "utils/debugoutputdialog.h"
 
 AIMainWindow::AIMainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -12,6 +13,11 @@ AIMainWindow::AIMainWindow(QWidget* parent)
 void AIMainWindow::onShowFlowField()
 {
 	changeCentralWidget(new FlowFieldWidget(this));
+}
+
+void AIMainWindow::onShowHillClimbing()
+{
+	changeCentralWidget(new HillClimbingWidget(this));
 }
 
 void AIMainWindow::onShowDebugOutput()

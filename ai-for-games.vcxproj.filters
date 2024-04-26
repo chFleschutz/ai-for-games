@@ -55,6 +55,9 @@
     <ClCompile Include="src\flowfield\flowfieldagent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\hillclimbing\hillclimbingwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h">
@@ -69,6 +72,9 @@
     <ClInclude Include="src\flowfield\flowfieldagent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\hillclimbing\hillclimbing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\flowfield\flowfieldwidget.h">
@@ -80,12 +86,18 @@
     <QtMoc Include="src\utils\imagerendererwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\hillclimbing\hillclimbingwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\flowfield\flowfieldwidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\utils\debugoutputdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\hillclimbing\hillclimbingwidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
