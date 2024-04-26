@@ -138,10 +138,10 @@ void FlowFieldWidget::onFreezeAgents(bool freeze)
 
 void FlowFieldWidget::onImagePaint(QPainter& painter)
 {
+	painter.setRenderHint(QPainter::Antialiasing, true);
+
 	if (m_showCells)
-	{
 		drawCellValues(painter);
-	}
 
 	m_agentManager.drawAgents(painter);
 }
@@ -182,29 +182,23 @@ void FlowFieldWidget::updateFlowField()
 
 void FlowFieldWidget::drawCellValues(QPainter& painter)
 {
-	painter.setRenderHint(QPainter::Antialiasing, true);
-
 	auto offset = m_pixelPerCell * 0.5f;
 	auto size = std::min(m_pixelPerCell.x(), m_pixelPerCell.y());
 	auto shapeSize = (m_pixelPerCell * m_cellSize).toPointF();
+
+	QPen pen(Qt::GlobalColor::green);
+	pen.setWidth(1);
+	pen.setStyle(Qt::PenStyle::SolidLine);
+	painter.setPen(pen);
 
 	for (uint32_t y = 0; y < m_flowField.height(); y++)
 	{
 		for (uint32_t x = 0; x < m_flowField.width(); x++)
 		{
-			auto& cell = m_flowField.cell(x, y);
+			const auto& cell = m_flowField.cellAt(x, y);
 			QColor color(cell.cost, cell.cost, cell.cost);
 			QRectF pointShape(-0.5f * shapeSize, 0.5f * shapeSize);
 
-			QPen pen(Qt::GlobalColor::green);
-			pen.setWidth(1);
-			pen.setStyle(Qt::PenStyle::SolidLine);
-			painter.setPen(pen);
-
-			QBrush brush;
-			brush.setStyle(Qt::BrushStyle::SolidPattern);
-			brush.setColor(color);
-			//painter.setBrush(brush);
 			painter.save();
 
 			auto posX = (x * m_pixelPerCell.x()) + offset.x();
@@ -245,7 +239,6 @@ void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, 
 	}
 
 	auto shift = 2.0f * digits(displayValue);
-	painter.setPen(Qt::GlobalColor::green);
 	painter.drawText(QPointF(posX - shift, posY + 4), QString::number(displayValue));
 }
 

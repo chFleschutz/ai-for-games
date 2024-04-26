@@ -14,10 +14,7 @@ void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCoun
 	m_width = cellCountX;
 	m_height = cellCountY;
 
-	m_field.resize(cellCountX);
-
-	for (auto& column : m_field)
-		column.resize(cellCountY);
+	m_field.resize(m_width * m_height);
 
 	clearDestinations();
 	resetField();
@@ -55,13 +52,10 @@ void FlowField::calc()
 
 void FlowField::resetField()
 {
-	for (auto& column : m_field)
+	for (auto& cell : m_field)
 	{
-		for (auto& cell : column)
-		{
-			cell.integrationCost = 255;
-			cell.flowDirection = QVector2D(0.0f, 0.0f);
-		}
+		cell.integrationCost = 255;
+		cell.flowDirection = QVector2D(0.0f, 0.0f);
 	}
 }
 
@@ -79,7 +73,7 @@ void FlowField::setNeighbors()
 	{
 		for (int x = 0; x < m_width; x++)
 		{
-			auto& cell = m_field[x][y];
+			auto& cell = cellAt(x, y);
 
 			for (int i = 0; i < 8; i++)
 			{
@@ -88,7 +82,7 @@ void FlowField::setNeighbors()
 
 				Cell* neighbor = nullptr;
 				if (neighborX >= 0 && neighborX < m_width && neighborY >= 0 && neighborY < m_height)
-					neighbor = &m_field[neighborX][neighborY];
+					neighbor = &cellAt(neighborX, neighborY);
 
 				cell.neighbors[i].cell = neighbor;
 				cell.neighbors[i].direction = QVector2D(dx[i], dy[i]);
@@ -114,11 +108,11 @@ void FlowField::calcCostField(QImage& image)
 				for (uint32_t pixelX = pixelOffsetX; pixelX < pixelOffsetX + pixelPerCellX; pixelX++)
 				{
 					auto color = image.pixel(pixelX, pixelY);
-					maxValue = std::max(maxValue, mapColorToCost(color)); 
+					maxValue = std::max(maxValue, mapColorToCost(color));
 				}
 			}
 
-			auto& cell = m_field[cellX][cellY];
+			auto& cell = cellAt(cellX, cellY);
 			cell.cost = maxValue;
 			cell.integrationCost = 255;
 		}
@@ -132,7 +126,7 @@ void FlowField::calcIntegrationField()
 	std::deque<Cell*> openList;
 	for (auto& dest : m_destinationPoints)
 	{
-		auto& destCell = m_field[dest.x][dest.y];
+		auto& destCell = cellAt(dest);
 		destCell.integrationCost = 0;
 		openList.push_back(&destCell);
 	}
@@ -159,43 +153,40 @@ void FlowField::calcIntegrationField()
 
 void FlowField::calcFlowField()
 {
-	for (auto& column : m_field)
+	for (auto& cell : m_field)
 	{
-		for (auto& cell : column)
+		int minCost = 255;
+		Cell::Neighbor* bestNeighbor = nullptr;
+
+		for (auto& neighbor : cell.neighbors)
 		{
-			int minCost = 255;
-			Cell::Neighbor* bestNeighbor = nullptr;
-
-			for (auto& neighbor : cell.neighbors)
-			{
-				if (neighbor.cell == nullptr)
-					continue;
-
-				if (neighbor.cell->integrationCost < minCost)
-				{
-					minCost = neighbor.cell->integrationCost;
-					bestNeighbor = &neighbor;
-				}
-			}
-
-			// No reachable neighbors found
-			if (minCost == 255)
-			{
-				cell.flowDirection = QVector2D(0.0f, 0.0f);
+			if (neighbor.cell == nullptr)
 				continue;
-			}
 
-			if (bestNeighbor != nullptr)
+			if (neighbor.cell->integrationCost < minCost)
 			{
-				cell.flowDirection = bestNeighbor->direction;
+				minCost = neighbor.cell->integrationCost;
+				bestNeighbor = &neighbor;
 			}
+		}
+
+		// No reachable neighbors found
+		if (minCost == 255)
+		{
+			cell.flowDirection = QVector2D(0.0f, 0.0f);
+			continue;
+		}
+
+		if (bestNeighbor != nullptr)
+		{
+			cell.flowDirection = bestNeighbor->direction;
 		}
 	}
 
 	// Disable flow direction for destination cells
 	for (auto& dest : m_destinationPoints)
 	{
-		auto& destCell = m_field[dest.x][dest.y];
+		auto& destCell = cellAt(dest);
 		destCell.flowDirection = QVector2D(0.0f, 0.0f);
 	}
 }
