@@ -47,7 +47,12 @@ public:
 	uint32_t width() const { return m_width; }
 	uint32_t height() const { return m_height; }
 
-	const Cell& cell(uint32_t x, uint32_t y) const { return m_field[x][y]; }
+	// Returns the cell at the given coordinate
+	Cell& cellAt(Coordinate coord) { return cellAt(coord.x, coord.y); }
+	const Cell& cellAt(Coordinate coord) const { return cellAt(coord.x, coord.y); }
+	
+	Cell& cellAt(uint32_t x, uint32_t y) { return m_field[(y * m_height) + x]; }
+	const Cell& cellAt(uint32_t x, uint32_t y) const { return m_field[(y * m_height) + x]; }
 
 private:
 	void setNeighbors();
@@ -58,7 +63,7 @@ private:
 
 	uint32_t m_width = 0;
 	uint32_t m_height = 0;
-	std::vector<std::vector<Cell>> m_field;
+	std::vector<Cell> m_field;
 
 	std::vector<Coordinate> m_destinationPoints;
 };

@@ -53,16 +53,29 @@ void AgentManager::updateAgents(const FlowFieldWidget& flowFieldWidget, float de
 		if (cellCoord.x < 0 || cellCoord.x >= flowField.width() || cellCoord.y < 0 || cellCoord.y >= flowField.height())
 			continue;
 
-		auto& cell = flowField.cell(cellCoord.x, cellCoord.y);
+		auto& cell = flowField.cellAt(cellCoord);
 		agent.update(cell.flowDirection, m_limits, deltaTime);
 	}
 }
 
 void AgentManager::drawAgents(QPainter& painter) const
 {
+	QPen pen(QColor(0, 255, 255, 200));
+	pen.setWidth(1);
+	pen.setStyle(Qt::PenStyle::SolidLine);
+
+	QBrush brush;
+	brush.setStyle(Qt::BrushStyle::SolidPattern);
+	brush.setColor(QColor(0, 255, 255, 200));
+
+	painter.setPen(pen);
+	painter.setBrush(brush);
+	painter.save();
+
 	for (const auto& agent : m_agents)
 	{
-		painter.setBrush(Qt::cyan);
 		painter.drawEllipse(agent.position().x(), agent.position().y(), 4, 4);
 	}
+
+	painter.restore();
 }
