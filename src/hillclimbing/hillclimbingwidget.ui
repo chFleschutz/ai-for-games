@@ -14,39 +14,6 @@
    <string>HillClimbingWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1">
-    <widget class="QGroupBox" name="hillClimbing_group">
-     <property name="title">
-      <string>Hill Climbing</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="2" column="0" colspan="2">
-       <widget class="QPushButton" name="calc_button">
-        <property name="text">
-         <string>Compute</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="startPos_label">
-        <property name="text">
-         <string>Start</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QSpinBox" name="startPos_spinBox"/>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>Clear Points</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QGroupBox" name="dataSet_group">
      <property name="sizePolicy">
@@ -107,6 +74,80 @@
      </layout>
     </widget>
    </item>
+   <item row="0" column="0" rowspan="3">
+    <widget class="QChartView" name="chartView"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="hillClimbing_group">
+     <property name="title">
+      <string>Hill Climbing</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="alpha_spinBox">
+        <property name="maximum">
+         <double>2.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.500000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="startIndex_label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="startPos_label">
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="momentum_checkBox">
+        <property name="text">
+         <string>Show Momentum</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QCheckBox" name="fitnessMomentum_checkBox">
+        <property name="text">
+         <string>Show Fitness-Momentum</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="alpha_label">
+        <property name="text">
+         <string>Momentum  Alpha</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="end_label">
+        <property name="text">
+         <string>End</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="endIndex_label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="2" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -120,8 +161,12 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" rowspan="3">
-    <widget class="QChartView" name="chartView"/>
+   <item row="3" column="0">
+    <widget class="QSlider" name="start_slider">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -152,22 +197,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>calc_button</sender>
-   <signal>clicked()</signal>
-   <receiver>HillClimbingWidgetClass</receiver>
-   <slot>onRunHillClimbing()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>549</x>
-     <y>204</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>484</x>
-     <y>198</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>defaultSet_comboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>HillClimbingWidgetClass</receiver>
@@ -184,18 +213,66 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
+   <sender>start_slider</sender>
+   <signal>valueChanged(int)</signal>
    <receiver>HillClimbingWidgetClass</receiver>
-   <slot>onResetHillClimbing()</slot>
+   <slot>onStartSliderChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>169</y>
+     <x>372</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>377</x>
+     <y>469</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>alpha_spinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onRunHillClimbing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>615</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>467</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>momentum_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onShowMomentum(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
      <x>468</x>
-     <y>169</y>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fitnessMomentum_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onShowFitnessMomentum(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>572</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>465</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
@@ -205,5 +282,10 @@
   <slot>onRunHillClimbing()</slot>
   <slot>onLoadDefaultValues(int)</slot>
   <slot>onResetHillClimbing()</slot>
+  <slot>onStartSpinBoxChanged(int)</slot>
+  <slot>onStartSliderChanged(int)</slot>
+  <slot>updateChart()</slot>
+  <slot>onShowMomentum(bool)</slot>
+  <slot>onShowFitnessMomentum(bool)</slot>
  </slots>
 </ui>

@@ -21,18 +21,35 @@ public:
 public slots:
 	void onLoadValues();
 	void onRunHillClimbing();
-	void onResetHillClimbing();
 	void onLoadDefaultValues(int index);
+	void onStartSliderChanged(int value);
+	void onShowMomentum(bool checked);
+	void onShowFitnessMomentum(bool checked);
+	void updateChart();
 
 private:
-	void updateChart();
 	void loadValues(const QString& filename);
+	void drawFitness();
+	void drawMomentum();
+	void drawFitnessMomentum();
+	void drawStartLine();
+	void updateChartBounds(float value);
 
 	Ui::HillClimbingWidgetClass ui;
 
-	std::vector<float> m_values;
-
 	QChart m_chart;
-	QLineSeries m_series;
+	QLineSeries m_fitnessSeries;
+	QLineSeries m_momentumSeries;
+	QLineSeries m_fitnessMomentumSeries;
 	QScatterSeries m_points;
+	QLineSeries m_startLine;
+
+	bool m_showMomentum = false;
+	bool m_showFitnessMomentum = false;
+
+	HillClimbing m_hillClimbing;
+
+	int m_startIndex = 0;
+	float m_minVal = 0.0f;
+	float m_maxVal = 0.0f;
 };
