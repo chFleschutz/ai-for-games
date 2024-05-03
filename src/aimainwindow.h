@@ -13,6 +13,7 @@ public:
 
 public slots:
 	void onShowFlowField();
+	void onShowHillClimbing();
 	void onShowDebugOutput();
 
 private:

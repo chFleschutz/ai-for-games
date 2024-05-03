@@ -38,12 +38,12 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.6.3_msvc2019_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;widgets;charts</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.6.3_msvc2019_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;widgets;charts</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -67,11 +67,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -100,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\flowfield\flowfieldagent.cpp" />
+    <ClCompile Include="src\hillclimbing\hillclimbingwidget.cpp" />
     <ClCompile Include="src\utils\imagerendererwidget.cpp" />
     <ClCompile Include="src\utils\debugoutputdialog.cpp" />
     <QtRcc Include="ressources.qrc" />
@@ -110,11 +113,14 @@
     <ClCompile Include="src\flowfield\flowfieldwidget.cpp" />
     <ClCompile Include="src\main.cpp" />
     <QtUic Include="src\flowfield\flowfieldwidget.ui" />
+    <QtUic Include="src\hillclimbing\hillclimbingwidget.ui" />
     <QtUic Include="src\utils\debugoutputdialog.ui" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h" />
     <ClInclude Include="src\flowfield\flowfieldagent.h" />
+    <QtMoc Include="src\hillclimbing\hillclimbingwidget.h" />
+    <ClInclude Include="src\hillclimbing\hillclimbing.h" />
     <ClInclude Include="src\utils\imagerenderer.h" />
     <QtMoc Include="src\utils\imagerendererwidget.h" />
     <ClInclude Include="src\utils\drawshape.h" />

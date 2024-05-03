@@ -33,7 +33,7 @@ void DebugOutputDialog::messageHandler(QtMsgType type, const QMessageLogContext 
 		format.setForeground(QColor(Qt::black));
 		break;
 	case QtWarningMsg:
-		format.setForeground(QColor(Qt::yellow));
+		format.setForeground(QColor(Qt::darkYellow));
 		break;
 	case QtCriticalMsg:
 		format.setForeground(QColor(Qt::red));

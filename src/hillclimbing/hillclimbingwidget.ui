@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HillClimbingWidgetClass</class>
+ <widget class="QWidget" name="HillClimbingWidgetClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>681</width>
+    <height>504</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>HillClimbingWidget</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="dataSet_group">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Data Set</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="0">
+       <widget class="QComboBox" name="defaultSet_comboBox">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>Random Set</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Data Set 1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Data Set 2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Data Set 3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Data Set 4</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="load_button">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Load a data set with tab separated values&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Load </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="3">
+    <widget class="QChartView" name="chartView"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="hillClimbing_group">
+     <property name="title">
+      <string>Hill Climbing</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="alpha_spinBox">
+        <property name="maximum">
+         <double>2.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.500000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="startIndex_label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="startPos_label">
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="momentum_checkBox">
+        <property name="text">
+         <string>Show Momentum</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QCheckBox" name="fitnessMomentum_checkBox">
+        <property name="text">
+         <string>Show Fitness-Momentum</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="alpha_label">
+        <property name="text">
+         <string>Momentum  Alpha</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="end_label">
+        <property name="text">
+         <string>End</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="endIndex_label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <widget class="QSlider" name="start_slider">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>QtCharts</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>load_button</sender>
+   <signal>clicked()</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onLoadValues()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>616</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>defaultSet_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onLoadDefaultValues(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>469</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>start_slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onStartSliderChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>377</x>
+     <y>469</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>alpha_spinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onRunHillClimbing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>615</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>467</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>momentum_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onShowMomentum(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fitnessMomentum_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>HillClimbingWidgetClass</receiver>
+   <slot>onShowFitnessMomentum(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>572</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>465</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onLoadValues()</slot>
+  <slot>onRunHillClimbing()</slot>
+  <slot>onLoadDefaultValues(int)</slot>
+  <slot>onResetHillClimbing()</slot>
+  <slot>onStartSpinBoxChanged(int)</slot>
+  <slot>onStartSliderChanged(int)</slot>
+  <slot>updateChart()</slot>
+  <slot>onShowMomentum(bool)</slot>
+  <slot>onShowFitnessMomentum(bool)</slot>
+ </slots>
+</ui>
