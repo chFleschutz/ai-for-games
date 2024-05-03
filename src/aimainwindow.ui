@@ -44,6 +44,7 @@
      <string>Learn Algorithms</string>
     </property>
     <addaction name="actionHill_Climbing"/>
+    <addaction name="actionRQ_Learning"/>
    </widget>
    <addaction name="menuPathfinding"/>
    <addaction name="menuLearn_Algorithms"/>
@@ -63,6 +64,11 @@
   <action name="actionHill_Climbing">
    <property name="text">
     <string>Hill Climbing</string>
+   </property>
+  </action>
+  <action name="actionRQ_Learning">
+   <property name="text">
+    <string>RQ Learning</string>
    </property>
   </action>
  </widget>
@@ -119,10 +125,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRQ_Learning</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowRQLearning()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onShowDebugOutput()</slot>
   <slot>onShowFlowField()</slot>
   <slot>onShowHillClimbing()</slot>
+  <slot>onShowRQLearning()</slot>
  </slots>
 </ui>

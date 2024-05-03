@@ -2,7 +2,9 @@
 
 #include "flowfield/flowfieldwidget.h"
 #include "hillclimbing/hillclimbingwidget.h"
+#include "rqlearning/rqlearningwidget.h"
 #include "utils/debugoutputdialog.h"
+
 
 AIMainWindow::AIMainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -12,12 +14,17 @@ AIMainWindow::AIMainWindow(QWidget* parent)
 
 void AIMainWindow::onShowFlowField()
 {
-	changeCentralWidget(new FlowFieldWidget(this));
+	changeCentralWidget<FlowFieldWidget>();
 }
 
 void AIMainWindow::onShowHillClimbing()
 {
-	changeCentralWidget(new HillClimbingWidget(this));
+	changeCentralWidget<HillClimbingWidget>();
+}
+
+void AIMainWindow::onShowRQLearning()
+{
+	changeCentralWidget<RQLearningWidget>();
 }
 
 void AIMainWindow::onShowDebugOutput()
@@ -25,16 +32,4 @@ void AIMainWindow::onShowDebugOutput()
 	DebugOutputDialog* dialog = new DebugOutputDialog(this);
 	dialog->setAttribute(Qt::WA_DeleteOnClose);
 	dialog->show();
-}
-
-void AIMainWindow::changeCentralWidget(QWidget* widget)
-{
-	auto oldWidget = centralWidget();
-	if (oldWidget)
-	{
-		oldWidget->hide();
-		oldWidget->deleteLater();
-	}
-
-	setCentralWidget(widget);
 }
