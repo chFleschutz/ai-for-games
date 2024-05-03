@@ -1,8 +1,11 @@
 #pragma once
 
-#include <QWidget>
-#include "ui_rqlearningwidget.h"
 #include "rqlearning/rqlearning.h"
+#include "ui_rqlearningwidget.h"
+
+#include <QTableWidget>
+#include <QTimer>
+#include <QWidget>
 
 class RQLearningWidget : public QWidget
 {
@@ -18,6 +21,9 @@ public slots:
 	void onAlphaChanged(double value);
 	void onGammaChanged(double value);
 	void onMaxIterationsChanged(int value);
+	void onDelayChanged(int value);
+	void onTrain();
+	void updateLearning();
 
 private:
 	void initTableWidgets();
@@ -35,4 +41,8 @@ private:
 	float m_gamma = 0.9f;
 
 	int m_maxIterations = 1000;
+
+	QTimer m_traintimer;
+	int m_iteration = 0;
+	int m_delay = 5;
 };

@@ -8,6 +8,7 @@ RQLearningWidget::RQLearningWidget(QWidget* parent)
 	ui.alpha_spinBox->setValue(m_alpha);
 	ui.gamma_spinBox->setValue(m_gamma);
 	ui.iterations_spinBox->setValue(m_maxIterations);
+	ui.delay_spinBox->setValue(m_delay);
 
 	m_graphWidget = ui.graph_widget;
 
@@ -19,6 +20,10 @@ RQLearningWidget::RQLearningWidget(QWidget* parent)
 	m_qTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_qTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+	connect(&m_traintimer, &QTimer::timeout, this, &RQLearningWidget::onTrain);
+	connect(m_graphWidget, &GraphWidget::nodeAdded, this, &RQLearningWidget::updateLearning);
+	connect(m_graphWidget, &GraphWidget::edgeAdded, this, &RQLearningWidget::updateLearning);
+
 	initTestGraph();
 	initTableWidgets();
 	updateTableWidgets();
@@ -26,12 +31,21 @@ RQLearningWidget::RQLearningWidget(QWidget* parent)
 
 void RQLearningWidget::onTrainButtonClicked()
 {
+	if (m_delay > 2) // Avoid blocking the thread
+	{
+		m_iteration = m_maxIterations;
+		m_traintimer.start(m_delay);
+		return;
+	}
+
 	m_rqLearning.train(m_alpha, m_gamma, m_maxIterations);
 	updateTableWidgets();
 }
 
 void RQLearningWidget::onResetButtonClicked()
 {
+	m_traintimer.stop();
+
 	m_rqLearning.resetQ();
 	updateTableWidgets();
 }
@@ -49,6 +63,22 @@ void RQLearningWidget::onGammaChanged(double value)
 void RQLearningWidget::onMaxIterationsChanged(int value)
 {
 	m_maxIterations = value;
+}
+
+void RQLearningWidget::onDelayChanged(int value)
+{
+	m_delay = value;
+}
+
+void RQLearningWidget::onTrain()
+{
+	m_rqLearning.train(m_alpha, m_gamma);
+	m_iteration--;
+
+	if (m_iteration <= 0)
+		m_traintimer.stop();
+
+	updateTableWidgets();
 }
 
 void RQLearningWidget::initTableWidgets()
@@ -119,6 +149,21 @@ void RQLearningWidget::updateTableWidgets()
 	}
 }
 
+void RQLearningWidget::updateLearning()
+{
+	auto& graph = m_graphWidget->graph();
+	m_rqLearning.init(graph.nodeCount());
+
+	// Set all possible transitions to 0
+	for (const auto& edge : graph.edges())
+	{
+		m_rqLearning.setR(edge.from, edge.to, 0.0f);
+	}
+
+	initTableWidgets();
+	updateTableWidgets();
+}
+
 void RQLearningWidget::initTestGraph()
 {
 	auto& graph = m_graphWidget->graph();
@@ -143,13 +188,7 @@ void RQLearningWidget::initTestGraph()
 	graph.addEdge(3, 4);
 	graph.addEdge(4, 0);
 
-	m_rqLearning.init(graph.nodeCount());
-
-	// Set all possible transitions to 0
-	for (const auto& edge : graph.edges())
-	{
-		m_rqLearning.setR(edge.from, edge.to, 0.0f);
-	}
+	updateLearning();
 
 	// Set rewards for some transitions
 	m_rqLearning.setR(4, 4, 1.0f);

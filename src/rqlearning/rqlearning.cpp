@@ -5,8 +5,11 @@
 void RQLearning::init(size_t size)
 {
 	m_size = size;
-	m_rMatrix.resize(size * size, -1.0f);
-	m_qMatrix.resize(size * size, 0.0f);
+	m_rMatrix.resize(size * size);
+	m_qMatrix.resize(size * size);
+
+	std::fill(m_rMatrix.begin(), m_rMatrix.end(), -1.0f);
+	std::fill(m_qMatrix.begin(), m_qMatrix.end(), 0.0f);
 }
 
 void RQLearning::setR(int state, int action, float value)

@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>474</height>
+    <width>800</width>
+    <height>624</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>RQLearningWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="5" rowspan="2">
+   <item row="1" column="5" rowspan="2">
     <widget class="QGroupBox" name="settings_groupBox">
      <property name="title">
-      <string>Settings</string>
+      <string>Train Settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="2">
@@ -37,7 +37,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1" colspan="2">
+      <item row="5" column="1" colspan="2">
        <widget class="QPushButton" name="train_button">
         <property name="text">
          <string>Train</string>
@@ -68,6 +68,13 @@
         </property>
        </widget>
       </item>
+      <item row="4" column="1" colspan="2">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="2">
        <widget class="QSpinBox" name="iterations_spinBox">
         <property name="minimum">
@@ -81,17 +88,20 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1" colspan="2">
-       <widget class="QPushButton" name="pushButton">
+      <item row="3" column="1">
+       <widget class="QLabel" name="delay_label">
         <property name="text">
-         <string>Reset</string>
+         <string>Delay (ms)</string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QSpinBox" name="delay_spinBox"/>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>R-Matrix</string>
@@ -131,7 +141,20 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="2">
+   <item row="3" column="5">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="2">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Q-Matrix</string>
@@ -171,20 +194,47 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="5">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="0" column="5">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Graph Settings</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="1" column="0" colspan="2">
+       <widget class="QPushButton" name="addNode_button">
+        <property name="text">
+         <string>Add Node</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QPushButton" name="clearGraph_button">
+        <property name="text">
+         <string>Clear Graph</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBox">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="presets_label">
+        <property name="text">
+         <string>Presets</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
-   <item row="0" column="0" rowspan="3" colspan="5">
+   <item row="0" column="0" rowspan="4" colspan="5">
     <widget class="GraphWidget" name="graph_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -203,6 +253,10 @@
    <extends>QWidget</extends>
    <header>rqlearning/graphwidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>addNode()</slot>
+    <slot>clear()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -214,12 +268,12 @@
    <slot>onTrainButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>671</x>
-     <y>161</y>
+     <x>703</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
-     <x>624</x>
-     <y>163</y>
+     <x>604</x>
+     <y>312</y>
     </hint>
    </hints>
   </connection>
@@ -230,12 +284,12 @@
    <slot>onResetButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>680</x>
-     <y>129</y>
+     <x>690</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
-     <x>622</x>
-     <y>132</y>
+     <x>604</x>
+     <y>283</y>
     </hint>
    </hints>
   </connection>
@@ -246,12 +300,12 @@
    <slot>onMaxIterationsChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>708</x>
-     <y>100</y>
+     <x>731</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
-     <x>621</x>
-     <y>101</y>
+     <x>536</x>
+     <y>220</y>
     </hint>
    </hints>
   </connection>
@@ -262,12 +316,12 @@
    <slot>onGammaChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>714</x>
-     <y>74</y>
+     <x>737</x>
+     <y>198</y>
     </hint>
     <hint type="destinationlabel">
-     <x>619</x>
-     <y>77</y>
+     <x>587</x>
+     <y>196</y>
     </hint>
    </hints>
   </connection>
@@ -278,12 +332,60 @@
    <slot>onAlphaChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>715</x>
-     <y>42</y>
+     <x>738</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
-     <x>620</x>
-     <y>47</y>
+     <x>566</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>delay_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>RQLearningWidgetClass</receiver>
+   <slot>onDelayChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>728</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>552</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearGraph_button</sender>
+   <signal>clicked()</signal>
+   <receiver>graph_widget</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>671</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>584</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addNode_button</sender>
+   <signal>clicked()</signal>
+   <receiver>graph_widget</receiver>
+   <slot>addNode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>646</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>572</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>
@@ -294,5 +396,7 @@
   <slot>onAlphaChanged(double)</slot>
   <slot>onGammaChanged(double)</slot>
   <slot>onMaxIterationsChanged(int)</slot>
+  <slot>onDelayChanged(int)</slot>
+  <slot>onAddNode()</slot>
  </slots>
 </ui>

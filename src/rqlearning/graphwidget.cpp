@@ -8,6 +8,27 @@ GraphWidget::GraphWidget(QWidget* parent)
 {
 }
 
+void GraphWidget::addNode()
+{
+	QPoint pos(width() / 2, height() / 2);
+	m_graph.addNode(pos);
+	emit nodeAdded();
+	update();
+}
+
+void GraphWidget::addEdge(uint32_t from, uint32_t to)
+{
+	m_graph.addEdge(from, to);
+	emit edgeAdded();
+	update();
+}
+
+void GraphWidget::clear()
+{
+	m_graph.clear();
+	update();
+}
+
 void GraphWidget::paintEvent(QPaintEvent* event)
 {
 	QPainter painter(this);
@@ -22,51 +43,70 @@ void GraphWidget::paintEvent(QPaintEvent* event)
 		auto start = m_graph.node(edge.from).position;
 		auto end = m_graph.node(edge.to).position;
 
-		painter.setPen(QPen(Qt::darkGray, 2));
+		painter.setPen(QPen(m_edgeColor, 2));
 		painter.drawLine(start, end);
 	}
 
 	for (const auto& node : m_graph.nodes())
 	{
-		painter.setPen(QPen(Qt::cyan, 1));
-		painter.setBrush(Qt::cyan);
+		auto color = m_nodeColor;
+		if (&node == m_selectedNode)
+			color = m_selectedNodeColor;
+
+		painter.setPen(QPen(color, 1));
+		painter.setBrush(color);
 		painter.drawEllipse(node.position, m_nodeRadius, m_nodeRadius);
 
-		painter.setPen(QPen(Qt::black, 1));
-		painter.drawText(node.position - QPoint(-5, 0), QString::number(node.id));
+		painter.setPen(QPen(m_nodeTextColor, 1));
+		painter.drawText(node.position, QString::number(node.id));
 	}
 }
 
 void GraphWidget::mousePressEvent(QMouseEvent* event)
 {
-	auto pos = event->pos();
+	auto node = nodeAt(event->pos());
+	if (!node)
+		return;
 
-	auto& nodes = m_graph.nodes();
-	for (auto& node : nodes)
-	{
-		if ((pos - node.position).manhattanLength() <= m_nodeRadius)
-		{
-			m_selectedNode = &node;
-			setCursor(Qt::ClosedHandCursor);
-			break;
-		}
-	}
+	selectNode(node);
 }
 
 void GraphWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	if (m_selectedNode)
-	{
-		m_selectedNode->position = event->pos();
-		update();
-	}
+	if (!m_selectedNode)
+		return;
+
+	m_selectedNode->position = event->pos();
+	update();
 }
 
 void GraphWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	if (m_selectedNode)
+	deselectNode();
+}
+
+Graph::Node* GraphWidget::nodeAt(const QPoint& pos)
+{
+	auto& nodes = m_graph.nodes();
+	for (auto& node : nodes)
 	{
-		m_selectedNode = nullptr;
-		setCursor(Qt::ArrowCursor);
+		if ((pos - node.position).manhattanLength() <= m_nodeRadius)
+			return &node;
 	}
+
+	return nullptr;
+}
+
+void GraphWidget::selectNode(Graph::Node* node)
+{
+	m_selectedNode = node;
+	setCursor(Qt::ClosedHandCursor);
+	update();
+}
+
+void GraphWidget::deselectNode()
+{
+	m_selectedNode = nullptr;
+	setCursor(Qt::ArrowCursor);
+	update();
 }
