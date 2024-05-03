@@ -36,7 +36,8 @@ void RQLearning::train(float alpha, float gamma)
 			maxQ = q(newState, action);
 	}
 
-	float qValue = rValue + gamma * maxQ;
+	float qValue = rValue + gamma * maxQ;							// Standard Q-Learning
+	qValue = (1.0f - alpha) * q(state, newState) + alpha * qValue;  // Incremental Learning
 	setQ(state, newState, qValue);
 }
 
