@@ -26,6 +26,7 @@ void GraphWidget::addEdge(uint32_t from, uint32_t to)
 void GraphWidget::clear()
 {
 	m_graph.clear();
+	emit cleared();
 	update();
 }
 

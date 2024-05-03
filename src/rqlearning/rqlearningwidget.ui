@@ -200,20 +200,6 @@
       <string>Graph Settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
-      <item row="1" column="0" colspan="2">
-       <widget class="QPushButton" name="addNode_button">
-        <property name="text">
-         <string>Add Node</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QPushButton" name="clearGraph_button">
-        <property name="text">
-         <string>Clear Graph</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QComboBox" name="comboBox">
         <property name="minimumSize">
@@ -222,6 +208,16 @@
           <height>0</height>
          </size>
         </property>
+        <item>
+         <property name="text">
+          <string>Test Graph</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Lecture Graph</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="0" column="0">
@@ -358,34 +354,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>clearGraph_button</sender>
-   <signal>clicked()</signal>
-   <receiver>graph_widget</receiver>
-   <slot>clear()</slot>
+   <sender>comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>RQLearningWidgetClass</receiver>
+   <slot>onLoadGraph(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>671</x>
-     <y>104</y>
+     <x>737</x>
+     <y>42</y>
     </hint>
     <hint type="destinationlabel">
-     <x>584</x>
-     <y>104</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addNode_button</sender>
-   <signal>clicked()</signal>
-   <receiver>graph_widget</receiver>
-   <slot>addNode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>646</x>
-     <y>73</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>572</x>
-     <y>75</y>
+     <x>623</x>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -398,5 +378,6 @@
   <slot>onMaxIterationsChanged(int)</slot>
   <slot>onDelayChanged(int)</slot>
   <slot>onAddNode()</slot>
+  <slot>onLoadGraph(int)</slot>
  </slots>
 </ui>

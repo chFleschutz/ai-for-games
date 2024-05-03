@@ -19,6 +19,9 @@ void RQLearning::setR(int state, int action, float value)
 
 void RQLearning::train(float alpha, float gamma)
 {
+	if (m_size == 0)
+		return;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(0, m_size - 1);

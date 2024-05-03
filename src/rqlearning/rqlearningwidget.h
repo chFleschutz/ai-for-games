@@ -24,11 +24,13 @@ public slots:
 	void onDelayChanged(int value);
 	void onTrain();
 	void updateLearning();
+	void onLoadGraph(int index);
 
 private:
 	void initTableWidgets();
 	void updateTableWidgets();
-	void initTestGraph();
+	void loadTestGraph();
+	void loadLectureGraph();
 
 	Ui::RQLearningWidgetClass ui;
 	GraphWidget* m_graphWidget;

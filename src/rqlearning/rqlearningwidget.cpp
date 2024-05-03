@@ -23,8 +23,9 @@ RQLearningWidget::RQLearningWidget(QWidget* parent)
 	connect(&m_traintimer, &QTimer::timeout, this, &RQLearningWidget::onTrain);
 	connect(m_graphWidget, &GraphWidget::nodeAdded, this, &RQLearningWidget::updateLearning);
 	connect(m_graphWidget, &GraphWidget::edgeAdded, this, &RQLearningWidget::updateLearning);
+	connect(m_graphWidget, &GraphWidget::cleared, this, &RQLearningWidget::updateLearning);
 
-	initTestGraph();
+	loadTestGraph();
 	initTableWidgets();
 	updateTableWidgets();
 }
@@ -79,6 +80,12 @@ void RQLearningWidget::onTrain()
 		m_traintimer.stop();
 
 	updateTableWidgets();
+
+	auto& graph = m_graphWidget->graph();
+	for (auto& node : graph.nodes())
+	{
+		qDebug() << "Node " << node.id << " Pos: " << node.position;
+	}
 }
 
 void RQLearningWidget::initTableWidgets()
@@ -164,15 +171,31 @@ void RQLearningWidget::updateLearning()
 	updateTableWidgets();
 }
 
-void RQLearningWidget::initTestGraph()
+void RQLearningWidget::onLoadGraph(int index)
 {
+	switch (index)
+	{
+	case 0:
+		loadTestGraph();
+		break;
+	case 1:
+		loadLectureGraph();
+		break;
+	default:
+		break;
+	}
+}
+
+void RQLearningWidget::loadTestGraph()
+{
+	m_graphWidget->clear();
 	auto& graph = m_graphWidget->graph();
 
-	graph.addNode(QPoint(100, 100));
-	graph.addNode(QPoint(200, 100));
-	graph.addNode(QPoint(100, 200));
-	graph.addNode(QPoint(200, 200));
-	graph.addNode(QPoint(300, 100));
+	graph.addNode(QPoint(500, 100));
+	graph.addNode(QPoint(400, 250));
+	graph.addNode(QPoint(200, 250));
+	graph.addNode(QPoint(500, 400));
+	graph.addNode(QPoint(700, 250));
 
 	graph.addEdge(0, 1);
 	graph.addEdge(0, 2);
@@ -189,10 +212,47 @@ void RQLearningWidget::initTestGraph()
 	graph.addEdge(4, 0);
 
 	updateLearning();
-
-	// Set rewards for some transitions
 	m_rqLearning.setR(4, 4, 1.0f);
 	m_rqLearning.setR(3, 4, 1.0f);
+
+	update();
+}
+
+void RQLearningWidget::loadLectureGraph()
+{
+	m_graphWidget->clear();
+	auto& graph = m_graphWidget->graph();
+
+	graph.addNode(QPoint(700, 400));
+	graph.addNode(QPoint(300, 400));
+	graph.addNode(QPoint(300, 250));
+	graph.addNode(QPoint(500, 100));
+	graph.addNode(QPoint(100, 400));
+	graph.addNode(QPoint(500, 250));
+	graph.addNode(QPoint(700, 250));
+	graph.addNode(QPoint(100, 100));
+
+	graph.addEdge(0, 5);
+	graph.addEdge(0, 6);
+	graph.addEdge(1, 2);
+	graph.addEdge(1, 4);
+	graph.addEdge(2, 1);
+	graph.addEdge(2, 5);
+	graph.addEdge(3, 5);
+	graph.addEdge(4, 1);
+	graph.addEdge(4, 7);
+	graph.addEdge(5, 0);
+	graph.addEdge(5, 2);
+	graph.addEdge(5, 3);
+	graph.addEdge(6, 0);
+	graph.addEdge(7, 3);
+	graph.addEdge(7, 4);
+	graph.addEdge(7, 7);
+
+	updateLearning();
+	m_rqLearning.setR(3, 7, 1.0f);
+	m_rqLearning.setR(4, 7, 1.0f);
+	m_rqLearning.setR(7, 7, 1.0f);
 
 	update();
 }

@@ -23,6 +23,7 @@ public slots:
 signals:
 	void nodeAdded();
 	void edgeAdded();
+	void cleared();
 
 protected:
 	virtual void paintEvent(QPaintEvent *event) override;
