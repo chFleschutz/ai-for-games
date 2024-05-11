@@ -184,6 +184,8 @@ void RQLearningWidget::onLoadGraph(int index)
 	default:
 		break;
 	}
+
+	updateTableWidgets();
 }
 
 void RQLearningWidget::loadTestGraph()
@@ -214,6 +216,7 @@ void RQLearningWidget::loadTestGraph()
 	updateLearning();
 	m_rqLearning.setR(4, 4, 1.0f);
 	m_rqLearning.setR(3, 4, 1.0f);
+	m_rqLearning.setR(0, 4, 1.0f);
 
 	update();
 }
