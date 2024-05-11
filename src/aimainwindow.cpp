@@ -3,8 +3,8 @@
 #include "flowfield/flowfieldwidget.h"
 #include "hillclimbing/hillclimbingwidget.h"
 #include "rqlearning/rqlearningwidget.h"
+#include "tactical_maps/tacticalmapwidget.h"
 #include "utils/debugoutputdialog.h"
-
 
 AIMainWindow::AIMainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -25,6 +25,11 @@ void AIMainWindow::onShowHillClimbing()
 void AIMainWindow::onShowRQLearning()
 {
 	changeCentralWidget<RQLearningWidget>();
+}
+
+void AIMainWindow::onShowTacticalMaps()
+{
+	changeCentralWidget<TacticalMapWidget>();
 }
 
 void AIMainWindow::onShowDebugOutput()

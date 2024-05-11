@@ -46,8 +46,15 @@
     <addaction name="actionHill_Climbing"/>
     <addaction name="actionRQ_Learning"/>
    </widget>
+   <widget class="QMenu" name="menuTactical_Maps">
+    <property name="title">
+     <string>Tactical Maps</string>
+    </property>
+    <addaction name="actionTactical_Maps"/>
+   </widget>
    <addaction name="menuPathfinding"/>
    <addaction name="menuLearn_Algorithms"/>
+   <addaction name="menuTactical_Maps"/>
    <addaction name="menuDebug"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -69,6 +76,11 @@
   <action name="actionRQ_Learning">
    <property name="text">
     <string>RQ Learning</string>
+   </property>
+  </action>
+  <action name="actionTactical_Maps">
+   <property name="text">
+    <string>Tactical Map</string>
    </property>
   </action>
  </widget>
@@ -141,11 +153,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionTactical_Maps</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowTacticalMaps()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onShowDebugOutput()</slot>
   <slot>onShowFlowField()</slot>
   <slot>onShowHillClimbing()</slot>
   <slot>onShowRQLearning()</slot>
+  <slot>onShowTacticalMaps()</slot>
  </slots>
 </ui>
