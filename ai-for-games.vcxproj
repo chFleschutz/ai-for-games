@@ -103,6 +103,10 @@
   <ItemGroup>
     <ClCompile Include="src\flowfield\flowfieldagent.cpp" />
     <ClCompile Include="src\hillclimbing\hillclimbingwidget.cpp" />
+    <ClCompile Include="src\rqlearning\graph.cpp" />
+    <ClCompile Include="src\rqlearning\graphwidget.cpp" />
+    <ClCompile Include="src\rqlearning\rqlearning.cpp" />
+    <ClCompile Include="src\rqlearning\rqlearningwidget.cpp" />
     <ClCompile Include="src\utils\imagerendererwidget.cpp" />
     <ClCompile Include="src\utils\debugoutputdialog.cpp" />
     <QtRcc Include="ressources.qrc" />
@@ -114,6 +118,7 @@
     <ClCompile Include="src\main.cpp" />
     <QtUic Include="src\flowfield\flowfieldwidget.ui" />
     <QtUic Include="src\hillclimbing\hillclimbingwidget.ui" />
+    <QtUic Include="src\rqlearning\rqlearningwidget.ui" />
     <QtUic Include="src\utils\debugoutputdialog.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +126,10 @@
     <ClInclude Include="src\flowfield\flowfieldagent.h" />
     <QtMoc Include="src\hillclimbing\hillclimbingwidget.h" />
     <ClInclude Include="src\hillclimbing\hillclimbing.h" />
+    <QtMoc Include="src\rqlearning\rqlearningwidget.h" />
+    <ClInclude Include="src\rqlearning\graph.h" />
+    <QtMoc Include="src\rqlearning\graphwidget.h" />
+    <ClInclude Include="src\rqlearning\rqlearning.h" />
     <ClInclude Include="src\utils\imagerenderer.h" />
     <QtMoc Include="src\utils\imagerendererwidget.h" />
     <ClInclude Include="src\utils\drawshape.h" />

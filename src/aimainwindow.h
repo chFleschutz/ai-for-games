@@ -14,10 +14,23 @@ public:
 public slots:
 	void onShowFlowField();
 	void onShowHillClimbing();
+	void onShowRQLearning();
 	void onShowDebugOutput();
 
 private:
-	void changeCentralWidget(QWidget* widget);
+	template <typename T>
+	void changeCentralWidget()
+	{
+		static_assert(std::is_base_of_v<QWidget, T>, "T must be a QWidget or derived from QWidget");
+		auto oldWidget = centralWidget();
+		if (oldWidget)
+		{
+			oldWidget->hide();
+			oldWidget->deleteLater();
+		}
+
+		setCentralWidget(new T(this));
+	}
 
 	Ui::AIMainWindowClass ui;
 };
