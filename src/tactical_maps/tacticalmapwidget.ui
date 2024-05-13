@@ -7,133 +7,185 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>400</height>
+    <height>587</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>TacticalMapWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="ImageRendererWidget" name="imageRenderer" native="true"/>
-   </item>
    <item row="0" column="1">
-    <widget class="QGroupBox" name="groupBox">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Map</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="2" column="1">
+         <widget class="QSlider" name="cellSize_slider">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="mapSize_label">
+          <property name="text">
+           <string>Map Size</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="mapSize_spinBox">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="cellSize_label">
+          <property name="text">
+           <string>Cell Size</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QCheckBox" name="values_checkBox">
+          <property name="text">
+           <string>Show Cell Values</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QComboBox" name="map_comboBox">
+          <item>
+           <property name="text">
+            <string>Simple Map</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Type</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="radioButton">
+          <property name="text">
+           <string>Proximity Map</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioButton_2">
+          <property name="text">
+           <string>Threat Map</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="influence_groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Influence Functions</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="maxDis_label">
+          <property name="text">
+           <string>Max Distance</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QRadioButton" name="linear_radioButton">
+          <property name="text">
+           <string>Linear</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QRadioButton" name="quadratic_radioButton">
+          <property name="text">
+           <string>Quadratic</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QDoubleSpinBox" name="maxDis_spinBox">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButton_4">
+          <property name="text">
+           <string>Cubic</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Units</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Clear Units</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0" rowspan="3">
+    <widget class="ImageRendererWidget" name="imageRenderer" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="5" column="0" colspan="2">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QCheckBox" name="values_checkBox">
-        <property name="text">
-         <string>Show Cell Values</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="mapSize_spinBox">
-        <property name="minimumSize">
-         <size>
-          <width>50</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="map_label">
-        <property name="text">
-         <string>Map</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSlider" name="cellSize_slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="map_comboBox">
-        <item>
-         <property name="text">
-          <string>Simple Map</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="mapSize_label">
-        <property name="text">
-         <string>Map Size</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="cellSize_label">
-        <property name="text">
-         <string>Cell Size</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QGroupBox" name="influence_groupBox">
-        <property name="title">
-         <string>Influence Function</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="2" column="0">
-          <widget class="QRadioButton" name="sqrt_radioButton">
-           <property name="text">
-            <string>Square Root</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QRadioButton" name="linear_radioButton">
-           <property name="text">
-            <string>Linear</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QRadioButton" name="quadratic_radioButton">
-           <property name="text">
-            <string>Quadratic</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QRadioButton" name="radioButton_4">
-           <property name="text">
-            <string>RadioButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
   </layout>
@@ -204,12 +256,12 @@
    <slot>onInfluenceLinear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>486</x>
-     <y>182</y>
+     <x>476</x>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
-     <x>432</x>
-     <y>180</y>
+     <x>426</x>
+     <y>218</y>
     </hint>
    </hints>
   </connection>
@@ -220,28 +272,60 @@
    <slot>onInfluenceQuadratic()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>469</x>
-     <y>205</y>
+     <x>458</x>
+     <y>244</y>
     </hint>
     <hint type="destinationlabel">
-     <x>430</x>
-     <y>208</y>
+     <x>423</x>
+     <y>245</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>sqrt_radioButton</sender>
-   <signal>clicked()</signal>
+   <sender>maxDis_spinBox</sender>
+   <signal>valueChanged(double)</signal>
    <receiver>TacticalMapWidgetClass</receiver>
-   <slot>onInfluenceSqrt()</slot>
+   <slot>onMaxDistanceChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>500</x>
-     <y>236</y>
+     <x>539</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>431</x>
-     <y>234</y>
+     <x>421</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onClearUnits()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>494</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>426</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceCubic()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>487</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>276</y>
     </hint>
    </hints>
   </connection>
@@ -252,6 +336,8 @@
   <slot>onShowCellValuesChanged(bool)</slot>
   <slot>onInfluenceLinear()</slot>
   <slot>onInfluenceQuadratic()</slot>
-  <slot>onInfluenceSqrt()</slot>
+  <slot>onInfluenceCubic()</slot>
+  <slot>onMaxDistanceChanged(double)</slot>
+  <slot>onClearUnits()</slot>
  </slots>
 </ui>

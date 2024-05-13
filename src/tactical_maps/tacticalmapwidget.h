@@ -22,7 +22,9 @@ public slots:
 	void onShowCellValuesChanged(bool value);
 	void onInfluenceLinear();
 	void onInfluenceQuadratic();
-	void onInfluenceSqrt();
+	void onInfluenceCubic();
+	void onMaxDistanceChanged(double value);
+	void onClearUnits();
 
 private:
 	Ui::TacticalMapWidgetClass ui;

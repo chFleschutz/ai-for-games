@@ -16,11 +16,13 @@ TacticalMapWidget::TacticalMapWidget(QWidget* parent)
 	ui.cellSize_slider->setValue(m_cellSize * 100);
 	ui.map_comboBox->setCurrentIndex(0);
 	ui.linear_radioButton->setChecked(true);
+	ui.maxDis_spinBox->setValue(m_map.influenceLimits().maxDistance);
 
 	connect(m_imageRenderer, &ImageRendererWidget::onPaintEvent, this, &TacticalMapWidget::onDrawMap, Qt::DirectConnection);
 	connect(m_imageRenderer, &ImageRendererWidget::onDoubleClicked, this, &TacticalMapWidget::onMapDoubleClicked);
 
 	onMapIndexChanged(0);
+	onCellCountChanged(m_cellCount);
 }
 
 void TacticalMapWidget::onMapDoubleClicked(QMouseEvent* event)
@@ -39,7 +41,8 @@ void TacticalMapWidget::onMapDoubleClicked(QMouseEvent* event)
 void TacticalMapWidget::onCellCountChanged(int value)
 {
 	m_cellCount = value;
-	m_map.resize(m_cellCount, m_cellCount);
+	auto& image = m_imageRenderer->renderer().image();
+	m_map.resize(image, m_cellCount, m_cellCount);
 	update();
 }
 
@@ -51,12 +54,12 @@ void TacticalMapWidget::onCellSizeChanged(int value)
 
 void TacticalMapWidget::onMapIndexChanged(int index)
 {
-	auto& map = m_imageRenderer->renderer();
+	auto& image = m_imageRenderer->renderer();
 
 	switch (index)
 	{
 	case 0:
-		map.load(":/assets/images/FlowfieldMap.png");
+		image.load(":/assets/images/FlowfieldMap.png");
 		break;
 	default:
 		break;
@@ -83,9 +86,21 @@ void TacticalMapWidget::onInfluenceQuadratic()
 	update();
 }
 
-void TacticalMapWidget::onInfluenceSqrt()
+void TacticalMapWidget::onInfluenceCubic()
 {
-	m_map.setInfluenceFunction<SqrtInfluence>();
+	m_map.setInfluenceFunction<CubicInfluence>();
+	update();
+}
+
+void TacticalMapWidget::onMaxDistanceChanged(double value)
+{
+	m_map.setMaxDistance(static_cast<float>(value));
+	update();
+}
+
+void TacticalMapWidget::onClearUnits()
+{
+	m_map.clearUnits();
 	update();
 }
 
@@ -107,16 +122,21 @@ void TacticalMapWidget::onDrawMap(QPainter& painter)
 
 			const QRect cellRect(cellX - (cellWidth * 0.5f), cellY - (cellHeight * 0.5f), cellWidth, cellHeight);
 
-			auto cellValue = m_map.valueAt(x, y);
-			qDebug() << "Cell value: " << cellValue;
-
-			QColor color = QColor(0, 255, 0, 255 * cellValue);
-			painter.fillRect(cellRect, color);
+			auto& cell = m_map.cellAt(x, y);
+			if (!cell.obstacle)
+			{
+				QColor color = QColor(0, 255, 0, 255 * cell.value);
+				painter.fillRect(cellRect, color);
+			}
+			else
+			{
+				painter.fillRect(cellRect, Qt::black);
+			}
 
 			if (m_showCellValues)
 			{
 				painter.setPen(Qt::black);
-				painter.drawText(cellRect, Qt::AlignCenter, QString::number(cellValue, 'f', 2));
+				painter.drawText(cellRect, Qt::AlignCenter, QString::number(cell.value, 'f', 2));
 			}
 		}
 	}

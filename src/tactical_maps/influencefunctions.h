@@ -7,47 +7,44 @@
 class InfluenceFunction
 {
 public:
+	struct Limits
+	{
+		float maxDistance = 10.0f;
+		float maxInfluence = 1.0f;
+	};
+
 	InfluenceFunction() = default;
 	virtual ~InfluenceFunction() = default;
 
-	virtual float compute(CellCoord cell, CellCoord unit) const = 0;
+	virtual float compute(float distance, Limits limits) const = 0;
 };
 
 class LinearInfluence : public InfluenceFunction
 {
 public:
-	float compute(CellCoord cell, CellCoord unit) const override
+	float compute(float distance, Limits limits) const override
 	{
-		auto dx = unit.x - cell.x;
-		auto dy = unit.y - cell.y;
-		auto distance = std::sqrt((dx * dx) + (dy * dy));
-
-		return 1.0f / (distance + 1.0f);
+		auto value = limits.maxInfluence - (limits.maxInfluence * (distance / limits.maxDistance));
+		return std::max(0.0f, value);
 	}
 };
 
 class QuadraticInfluence : public InfluenceFunction
 {
 public:
-	float compute(CellCoord cell, CellCoord unit) const override
+	float compute(float distance, Limits limits) const override
 	{
-		auto dx = unit.x - cell.x;
-		auto dy = unit.y - cell.y;
-		auto distance = std::sqrt((dx * dx) + (dy * dy));
-
-		return 1.0 / std::pow(1.0 + distance, 2);
+		auto value = limits.maxInfluence - std::pow(limits.maxInfluence * (distance / limits.maxDistance), 2);
+		return std::max(0.0, value);
 	}
 };
 
-class SqrtInfluence : public InfluenceFunction
+class CubicInfluence : public InfluenceFunction
 {
 public:
-	float compute(CellCoord cell, CellCoord unit) const override
+	float compute(float distance, Limits limits) const override
 	{
-		auto dx = unit.x - cell.x;
-		auto dy = unit.y - cell.y;
-		auto distance = std::sqrt((dx * dx) + (dy * dy));
-
-		return 1.0f / std::sqrt(1.0f + distance);
+		auto value = limits.maxInfluence - std::pow(limits.maxInfluence * (distance / limits.maxDistance), 3);
+		return std::max(0.0, value);
 	}
 };

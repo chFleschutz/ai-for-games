@@ -1,11 +1,19 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
 
 struct CellCoord
 {
 	uint32_t x;
 	uint32_t y;
+
+	static float distance(const CellCoord& a, const CellCoord& b)
+	{
+		auto dx = static_cast<int>(a.x) - static_cast<int>(b.x);
+		auto dy = static_cast<int>(a.y) - static_cast<int>(b.y);
+		return std::sqrt((dx * dx) + (dy * dy));
+	}
 };
 
 template <typename T>
@@ -33,6 +41,11 @@ public:
 	uint32_t height() const { return m_height; }
 
 	std::vector<T>& field() { return m_field; }
+
+	void fill(const T& value)
+	{
+		std::fill(m_field.begin(), m_field.end(), value);
+	}
 
 protected:
 	uint32_t m_width = 0;
