@@ -13,8 +13,245 @@
   <property name="windowTitle">
    <string>TacticalMapWidget</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="ImageRendererWidget" name="imageRenderer" native="true"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="5" column="0" colspan="2">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="values_checkBox">
+        <property name="text">
+         <string>Show Cell Values</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="mapSize_spinBox">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="map_label">
+        <property name="text">
+         <string>Map</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSlider" name="cellSize_slider">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="map_comboBox">
+        <item>
+         <property name="text">
+          <string>Simple Map</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="mapSize_label">
+        <property name="text">
+         <string>Map Size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="cellSize_label">
+        <property name="text">
+         <string>Cell Size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QGroupBox" name="influence_groupBox">
+        <property name="title">
+         <string>Influence Function</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="sqrt_radioButton">
+           <property name="text">
+            <string>Square Root</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="linear_radioButton">
+           <property name="text">
+            <string>Linear</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="quadratic_radioButton">
+           <property name="text">
+            <string>Quadratic</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QRadioButton" name="radioButton_4">
+           <property name="text">
+            <string>RadioButton</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ImageRendererWidget</class>
+   <extends>QWidget</extends>
+   <header>utils/imagerendererwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>mapSize_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onCellCountChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>533</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>436</x>
+     <y>74</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cellSize_slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onCellSizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>554</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>433</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>values_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onShowCellValuesChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>466</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>linear_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceLinear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>432</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>quadratic_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceQuadratic()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>469</x>
+     <y>205</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>430</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sqrt_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceSqrt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>500</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onCellCountChanged(int)</slot>
+  <slot>onCellSizeChanged(int)</slot>
+  <slot>onShowCellValuesChanged(bool)</slot>
+  <slot>onInfluenceLinear()</slot>
+  <slot>onInfluenceQuadratic()</slot>
+  <slot>onInfluenceSqrt()</slot>
+ </slots>
 </ui>

@@ -73,6 +73,9 @@
     <ClCompile Include="src\tactical_maps\tacticalmapwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tactical_maps\tacticalmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h">
@@ -94,6 +97,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\rqlearning\rqlearning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\cellfield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tactical_maps\tacticalmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tactical_maps\influencefunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
