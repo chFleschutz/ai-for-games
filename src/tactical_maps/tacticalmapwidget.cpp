@@ -12,11 +12,17 @@ TacticalMapWidget::TacticalMapWidget(QWidget* parent)
 	m_imageRenderer = ui.imageRenderer;
 	Q_ASSERT(m_imageRenderer);
 
+	ui.map_comboBox->setCurrentIndex(0);
 	ui.mapSize_spinBox->setValue(m_cellCount);
 	ui.cellSize_slider->setValue(m_cellSize * 100);
-	ui.map_comboBox->setCurrentIndex(0);
-	ui.linear_radioButton->setChecked(true);
-	ui.maxDis_spinBox->setValue(m_map.influenceLimits().maxDistance);
+
+	ui.global_radioButton->setChecked(true);
+	ui.millington_radioButton->setChecked(true);
+
+	auto& limits = m_map.influenceLimits();
+	ui.maxDis_spinBox->setValue(limits.maxDistance);
+	ui.offset_spinBox->setValue(limits.offset);
+	ui.exponent_spinBox->setValue(limits.exponent);
 
 	connect(m_imageRenderer, &ImageRendererWidget::onPaintEvent, this, &TacticalMapWidget::onDrawMap, Qt::DirectConnection);
 	connect(m_imageRenderer, &ImageRendererWidget::onDoubleClicked, this, &TacticalMapWidget::onMapDoubleClicked);
@@ -59,12 +65,16 @@ void TacticalMapWidget::onMapIndexChanged(int index)
 	switch (index)
 	{
 	case 0:
-		image.load(":/assets/images/FlowfieldMap.png");
+		image.load(":/images/simplemap.png", size());
+		break;
+	case 1:
+		image.load(":/images/obstacles.png", size());
 		break;
 	default:
-		break;
+		return;
 	}
 
+	m_map.resize(image.image(), m_cellCount, m_cellCount);
 	update();
 }
 
@@ -74,27 +84,63 @@ void TacticalMapWidget::onShowCellValuesChanged(bool value)
 	update();
 }
 
-void TacticalMapWidget::onInfluenceLinear()
+void TacticalMapWidget::onInfluenceTypeGlobal()
 {
-	m_map.setInfluenceFunction<LinearInfluence>();
+	m_map.setInfluenceType(TacticalMap::InfluenceType::Global);
 	update();
 }
 
-void TacticalMapWidget::onInfluenceQuadratic()
+void TacticalMapWidget::onInfluenceTypeProximity()
 {
-	m_map.setInfluenceFunction<QuadraticInfluence>();
+	m_map.setInfluenceType(TacticalMap::InfluenceType::Proximity);
 	update();
 }
 
-void TacticalMapWidget::onInfluenceCubic()
+void TacticalMapWidget::onInfluenceTypeLineOfSight()
 {
-	m_map.setInfluenceFunction<CubicInfluence>();
+	m_map.setInfluenceType(TacticalMap::InfluenceType::LineOfSight);
 	update();
 }
 
 void TacticalMapWidget::onMaxDistanceChanged(double value)
 {
-	m_map.setMaxDistance(static_cast<float>(value));
+	InfluenceFunction::Limits limits = m_map.influenceLimits();
+	limits.maxDistance = static_cast<float>(value);
+	m_map.setInfluenceLimits(limits);
+	update();
+}
+
+void TacticalMapWidget::onOffsetChanged(double value)
+{
+	InfluenceFunction::Limits limits = m_map.influenceLimits();
+	limits.offset = static_cast<float>(value);
+	m_map.setInfluenceLimits(limits);
+	update();
+}
+
+void TacticalMapWidget::onExponentChanged(double value)
+{
+	InfluenceFunction::Limits limits = m_map.influenceLimits();
+	limits.exponent = static_cast<float>(value);
+	m_map.setInfluenceLimits(limits);
+	update();
+}
+
+void TacticalMapWidget::onInfluenceMillington()
+{
+	m_map.setInfluenceFunction<MillingtonInfluence>();
+	update();
+}
+
+void TacticalMapWidget::onInfluenceMark()
+{
+	m_map.setInfluenceFunction<MarkInfluence>();
+	update();
+}
+
+void TacticalMapWidget::onInfluenceBichlmeier()
+{
+	m_map.setInfluenceFunction<BichlmeierInfluence>();
 	update();
 }
 
@@ -123,7 +169,7 @@ void TacticalMapWidget::onDrawMap(QPainter& painter)
 			const QRect cellRect(cellX - (cellWidth * 0.5f), cellY - (cellHeight * 0.5f), cellWidth, cellHeight);
 
 			auto& cell = m_map.cellAt(x, y);
-			if (!cell.obstacle)
+			if (!cell.isObstacle)
 			{
 				QColor color = QColor(0, 255, 0, 255 * cell.value);
 				painter.fillRect(cellRect, color);

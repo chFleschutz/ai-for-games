@@ -8,13 +8,28 @@ struct CellCoord
 	uint32_t x;
 	uint32_t y;
 
+	CellCoord(uint32_t xCoord, uint32_t yCoord) : x(xCoord), y(yCoord) {}
+
 	static float distance(const CellCoord& a, const CellCoord& b)
 	{
 		auto dx = static_cast<int>(a.x) - static_cast<int>(b.x);
 		auto dy = static_cast<int>(a.y) - static_cast<int>(b.y);
 		return std::sqrt((dx * dx) + (dy * dy));
 	}
+
+	bool operator == (const CellCoord& other) const = default;
+	bool operator != (const CellCoord& other) const = default;
 };
+
+// Function to hash a CellCoord (for use in unordered_map or unordered_set)
+struct CellCoordHash
+{
+	std::size_t operator()(const CellCoord& coord) const
+	{
+		return std::hash<uint32_t>()(coord.x) ^ (std::hash<uint32_t>()(coord.y) << 1);
+	}
+};
+
 
 template <typename T>
 class CellField

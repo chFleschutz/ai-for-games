@@ -51,7 +51,7 @@ void FlowFieldWidget::onSetMap(int mapIndex)
 	switch (mapIndex)
 	{
 	case 0:
-		m_imageWidget->renderer().load(":/assets/images/FlowfieldMap.png", size());
+		m_imageWidget->renderer().load(":/images/simplemap.png", size());
 		break;
 	default:
 		// Invalid index 

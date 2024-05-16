@@ -14,6 +14,16 @@
    <string>TacticalMapWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" rowspan="3">
+    <widget class="ImageRendererWidget" name="imageRenderer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -73,28 +83,40 @@
             <string>Simple Map</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>Obstacles</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_3">
+      <widget class="QGroupBox" name="type_groupBox">
        <property name="title">
         <string>Type</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="radioButton">
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="thread_radioButton">
+          <property name="text">
+           <string>Threat Map</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="proximity_radioButton">
           <property name="text">
            <string>Proximity Map</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="radioButton_2">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="global_radioButton">
           <property name="text">
-           <string>Threat Map</string>
+           <string>Global</string>
           </property>
          </widget>
         </item>
@@ -113,28 +135,14 @@
         <string>Influence Functions</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="maxDis_label">
           <property name="text">
            <string>Max Distance</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="QRadioButton" name="linear_radioButton">
-          <property name="text">
-           <string>Linear</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QRadioButton" name="quadratic_radioButton">
-          <property name="text">
-           <string>Quadratic</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
+        <item row="3" column="1">
          <widget class="QDoubleSpinBox" name="maxDis_spinBox">
           <property name="minimumSize">
            <size>
@@ -142,12 +150,72 @@
             <height>0</height>
            </size>
           </property>
+          <property name="decimals">
+           <number>1</number>
+          </property>
          </widget>
         </item>
-        <item row="4" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButton_4">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="millington_radioButton">
           <property name="text">
-           <string>Cubic</string>
+           <string>Millington</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="bichlmeier_radioButton">
+          <property name="text">
+           <string>Bichlmeier</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="mark_radioButton">
+          <property name="text">
+           <string>Mark</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="exponent_label">
+          <property name="text">
+           <string>Exponent</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QDoubleSpinBox" name="exponent_spinBox">
+          <property name="decimals">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <double>5.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="offset_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Offset</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QDoubleSpinBox" name="offset_spinBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="decimals">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <double>99.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -177,16 +245,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="0" column="0" rowspan="3">
-    <widget class="ImageRendererWidget" name="imageRenderer" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
@@ -250,50 +308,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>linear_radioButton</sender>
-   <signal>clicked()</signal>
-   <receiver>TacticalMapWidgetClass</receiver>
-   <slot>onInfluenceLinear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>476</x>
-     <y>210</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>426</x>
-     <y>218</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>quadratic_radioButton</sender>
-   <signal>clicked()</signal>
-   <receiver>TacticalMapWidgetClass</receiver>
-   <slot>onInfluenceQuadratic()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>458</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>423</x>
-     <y>245</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>maxDis_spinBox</sender>
    <signal>valueChanged(double)</signal>
    <receiver>TacticalMapWidgetClass</receiver>
    <slot>onMaxDistanceChanged(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>539</x>
-     <y>184</y>
+     <x>569</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
-     <x>421</x>
-     <y>185</y>
+     <x>426</x>
+     <y>386</y>
     </hint>
    </hints>
   </connection>
@@ -304,28 +330,188 @@
    <slot>onClearUnits()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>338</y>
+     <x>579</x>
+     <y>517</y>
     </hint>
     <hint type="destinationlabel">
      <x>426</x>
-     <y>338</y>
+     <y>509</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>proximity_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>TacticalMapWidgetClass</receiver>
-   <slot>onInfluenceCubic()</slot>
+   <slot>onInfluenceTypeProximity()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
-     <y>277</y>
+     <x>475</x>
+     <y>218</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>thread_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceTypeLineOfSight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>473</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>map_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onMapIndexChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>476</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>global_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceTypeGlobal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>offset_spinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onOffsetChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>537</x>
+     <y>447</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>426</x>
+     <y>439</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bichlmeier_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceBichlmeier()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>355</y>
     </hint>
     <hint type="destinationlabel">
      <x>427</x>
-     <y>276</y>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exponent_spinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onExponentChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>554</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>429</x>
+     <y>413</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mark_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceMark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>453</x>
+     <y>335</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>millington_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onInfluenceMillington()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>475</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>428</x>
+     <y>303</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bichlmeier_radioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>offset_label</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>502</x>
+     <y>358</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>446</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bichlmeier_radioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>offset_spinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>506</x>
+     <y>363</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>535</x>
+     <y>443</y>
     </hint>
    </hints>
   </connection>
@@ -339,5 +525,14 @@
   <slot>onInfluenceCubic()</slot>
   <slot>onMaxDistanceChanged(double)</slot>
   <slot>onClearUnits()</slot>
+  <slot>onInfluenceTypeProximity()</slot>
+  <slot>onInfluenceTypeLineOfSight()</slot>
+  <slot>onMapIndexChanged(int)</slot>
+  <slot>onInfluenceTypeGlobal()</slot>
+  <slot>onOffsetChanged(double)</slot>
+  <slot>onExponentChanged(double)</slot>
+  <slot>onInfluenceBichlmeier()</slot>
+  <slot>onInfluenceMillington()</slot>
+  <slot>onInfluenceMark()</slot>
  </slots>
 </ui>

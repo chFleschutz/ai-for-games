@@ -15,7 +15,14 @@ public:
 	struct Cell
 	{
 		float value = 0.0f;
-		bool obstacle = false;
+		bool isObstacle = false;
+	};
+
+	enum class InfluenceType
+	{
+		Global,
+		Proximity,
+		LineOfSight
 	};
 
 	TacticalMap() = default;
@@ -40,19 +47,28 @@ public:
 		updateField();
 	}
 
-	void setMaxDistance(float value);
-	void setMaxInfluence(float value);
+	void setInfluenceLimits(const InfluenceFunction::Limits& limits);
 	const InfluenceFunction::Limits& influenceLimits() const { return m_influenceLimits; }
+
+	void setInfluenceType(InfluenceType type);
+	InfluenceType influenceType() const { return m_influenceType; }
 
 private:
 	void resetField();
 	void updateField();
-	bool obstacle(QImage& image, int cellX, int cellY);
+	bool isObstacle(QImage& image, int cellX, int cellY);
+	bool hasLineOfSight(CellCoord start, CellCoord end);
+
+	void globalInfluence(CellCoord start);
 	void proximityInfluence(CellCoord start);
+	void lineOfSightInfluence(CellCoord start);
+	void updateInfluence(Cell& cell, float distance);
 
 	CellField<Cell> m_field;
 	std::vector<CellCoord> m_units;
 
 	InfluenceFunction::Limits m_influenceLimits;
-	std::unique_ptr<InfluenceFunction> m_influenceFunction = std::make_unique<LinearInfluence>();
+	std::unique_ptr<InfluenceFunction> m_influenceFunction = std::make_unique<MillingtonInfluence>();
+
+	InfluenceType m_influenceType = InfluenceType::Global;
 };

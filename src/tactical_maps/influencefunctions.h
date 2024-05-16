@@ -11,6 +11,8 @@ public:
 	{
 		float maxDistance = 10.0f;
 		float maxInfluence = 1.0f;
+		float offset = 0.0f;
+		float exponent = 1.0f;
 	};
 
 	InfluenceFunction() = default;
@@ -19,32 +21,33 @@ public:
 	virtual float compute(float distance, Limits limits) const = 0;
 };
 
-class LinearInfluence : public InfluenceFunction
+class MillingtonInfluence : public InfluenceFunction
 {
 public:
 	float compute(float distance, Limits limits) const override
 	{
-		auto value = limits.maxInfluence - (limits.maxInfluence * (distance / limits.maxDistance));
+		return limits.maxInfluence / std::pow(1.0f + distance, limits.exponent);
+	}
+};
+
+class MarkInfluence : public InfluenceFunction
+{
+public:
+	float compute(float distance, Limits limits) const override
+	{
+		float factor = limits.maxInfluence * (distance / limits.maxDistance);
+		float value = limits.maxInfluence - std::pow(factor, limits.exponent);
 		return std::max(0.0f, value);
 	}
 };
 
-class QuadraticInfluence : public InfluenceFunction
+class BichlmeierInfluence : public InfluenceFunction
 {
 public:
 	float compute(float distance, Limits limits) const override
 	{
-		auto value = limits.maxInfluence - std::pow(limits.maxInfluence * (distance / limits.maxDistance), 2);
-		return std::max(0.0, value);
-	}
-};
-
-class CubicInfluence : public InfluenceFunction
-{
-public:
-	float compute(float distance, Limits limits) const override
-	{
-		auto value = limits.maxInfluence - std::pow(limits.maxInfluence * (distance / limits.maxDistance), 3);
-		return std::max(0.0, value);
+		float factor = std::pow(std::abs(limits.offset - distance) / limits.maxDistance, limits.exponent);
+		float value = limits.maxInfluence - (limits.maxInfluence * factor);
+		return std::max(0.0f, value);
 	}
 };

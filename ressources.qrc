@@ -1,11 +1,15 @@
 <RCC>
-    <qresource prefix="/">
-        <file>assets/images/appicon.ico</file>
-        <file>assets/images/FlowfieldMap.png</file>
-        <file>assets/data_sets/data_set_1.txt</file>
-        <file>assets/data_sets/data_set_2.txt</file>
-        <file>assets/data_sets/data_set_3.txt</file>
-        <file>assets/data_sets/data_set_4.txt</file>
-        <file>assets/data_sets/random_set.txt</file>
+    <qresource prefix="/images">
+        <file alias="appicon.ico">assets/images/appicon.ico</file>
+        <file alias="obstacles.png">assets/images/obstacles.png</file>
+        <file alias="simplemap.png">assets/images/simplemap.png</file>
     </qresource>
+    <qresource prefix="/data_sets">
+        <file alias="data_set1.txt">assets/data_sets/data_set_1.txt</file>
+        <file alias="data_set2.txt">assets/data_sets/data_set_2.txt</file>
+        <file alias="data_set3.txt">assets/data_sets/data_set_3.txt</file>
+        <file alias="data_set4.txt">assets/data_sets/data_set_4.txt</file>
+        <file alias="random_set.txt">assets/data_sets/random_set.txt</file>
+    </qresource>
+    <qresource prefix="/"/>
 </RCC>

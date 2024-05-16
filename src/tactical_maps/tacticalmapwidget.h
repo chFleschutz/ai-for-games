@@ -16,14 +16,24 @@ public:
 public slots:
 	void onMapDoubleClicked(QMouseEvent* event);
 	void onDrawMap(QPainter& painter);
+
 	void onCellCountChanged(int value);
 	void onCellSizeChanged(int value);
 	void onMapIndexChanged(int index);
 	void onShowCellValuesChanged(bool value);
-	void onInfluenceLinear();
-	void onInfluenceQuadratic();
-	void onInfluenceCubic();
+	
+	void onInfluenceTypeGlobal();
+	void onInfluenceTypeProximity();
+	void onInfluenceTypeLineOfSight();
+
 	void onMaxDistanceChanged(double value);
+	void onOffsetChanged(double value);
+	void onExponentChanged(double value);
+
+	void onInfluenceMillington();
+	void onInfluenceMark();
+	void onInfluenceBichlmeier();
+
 	void onClearUnits();
 
 private:
