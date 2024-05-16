@@ -237,5 +237,5 @@ void TacticalMap::lineOfSightInfluence(CellCoord start)
 void TacticalMap::updateInfluence(Cell& cell, float distance)
 {
 	cell.value += m_influenceFunction->compute(distance, m_influenceLimits);
-	cell.value = std::max(0.0f, std::min(1.0f, cell.value));
+	cell.value = std::max(0.0f, std::min(m_influenceLimits.maxInfluence, cell.value));
 }

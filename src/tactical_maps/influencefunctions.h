@@ -35,8 +35,8 @@ class MarkInfluence : public InfluenceFunction
 public:
 	float compute(float distance, Limits limits) const override
 	{
-		float factor = limits.maxInfluence * (distance / limits.maxDistance);
-		float value = limits.maxInfluence - std::pow(factor, limits.exponent);
+		float factor = distance / limits.maxDistance;
+		float value = limits.maxInfluence - std::pow(limits.maxInfluence * factor, limits.exponent);
 		return std::max(0.0f, value);
 	}
 };

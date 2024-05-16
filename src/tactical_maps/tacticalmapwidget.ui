@@ -219,6 +219,29 @@
           </property>
          </widget>
         </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="maxInf_label">
+          <property name="text">
+           <string>Max Influence</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QDoubleSpinBox" name="maxInf_spinBox">
+          <property name="decimals">
+           <number>1</number>
+          </property>
+          <property name="minimum">
+           <double>0.100000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -331,7 +354,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>579</x>
-     <y>517</y>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>426</x>
@@ -411,11 +434,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>537</x>
-     <y>447</y>
+     <y>475</y>
     </hint>
     <hint type="destinationlabel">
-     <x>426</x>
-     <y>439</y>
+     <x>425</x>
+     <y>468</y>
     </hint>
    </hints>
   </connection>
@@ -443,11 +466,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>554</x>
-     <y>413</y>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
-     <x>429</x>
-     <y>413</y>
+     <x>427</x>
+     <y>443</y>
     </hint>
    </hints>
   </connection>
@@ -495,7 +518,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
-     <y>446</y>
+     <y>474</y>
     </hint>
    </hints>
   </connection>
@@ -511,7 +534,23 @@
     </hint>
     <hint type="destinationlabel">
      <x>535</x>
-     <y>443</y>
+     <y>471</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>maxInf_spinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>TacticalMapWidgetClass</receiver>
+   <slot>onMaxInfluenceChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>563</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>418</y>
     </hint>
    </hints>
   </connection>
@@ -520,9 +559,6 @@
   <slot>onCellCountChanged(int)</slot>
   <slot>onCellSizeChanged(int)</slot>
   <slot>onShowCellValuesChanged(bool)</slot>
-  <slot>onInfluenceLinear()</slot>
-  <slot>onInfluenceQuadratic()</slot>
-  <slot>onInfluenceCubic()</slot>
   <slot>onMaxDistanceChanged(double)</slot>
   <slot>onClearUnits()</slot>
   <slot>onInfluenceTypeProximity()</slot>
@@ -534,5 +570,6 @@
   <slot>onInfluenceBichlmeier()</slot>
   <slot>onInfluenceMillington()</slot>
   <slot>onInfluenceMark()</slot>
+  <slot>onMaxInfluenceChanged(double)</slot>
  </slots>
 </ui>

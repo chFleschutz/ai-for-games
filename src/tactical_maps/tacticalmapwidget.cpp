@@ -21,6 +21,7 @@ TacticalMapWidget::TacticalMapWidget(QWidget* parent)
 
 	auto& limits = m_map.influenceLimits();
 	ui.maxDis_spinBox->setValue(limits.maxDistance);
+	ui.maxInf_spinBox->setValue(limits.maxInfluence);
 	ui.offset_spinBox->setValue(limits.offset);
 	ui.exponent_spinBox->setValue(limits.exponent);
 
@@ -110,6 +111,14 @@ void TacticalMapWidget::onMaxDistanceChanged(double value)
 	update();
 }
 
+void TacticalMapWidget::onMaxInfluenceChanged(double value)
+{
+	InfluenceFunction::Limits limits = m_map.influenceLimits();
+	limits.maxInfluence = static_cast<float>(value);
+	m_map.setInfluenceLimits(limits);
+	update();
+}
+
 void TacticalMapWidget::onOffsetChanged(double value)
 {
 	InfluenceFunction::Limits limits = m_map.influenceLimits();
@@ -155,6 +164,8 @@ void TacticalMapWidget::onDrawMap(QPainter& painter)
 	float pixelPerCellX = m_imageRenderer->imageWidth() / static_cast<float>(m_map.field().width());
 	float pixelPerCellY = m_imageRenderer->imageHeight() / static_cast<float>(m_map.field().height());
 
+	auto& limits = m_map.influenceLimits();
+
 	// Draw the tactical map
 	for (uint32_t y = 0; y < m_map.field().height(); ++y)
 	{
@@ -171,7 +182,7 @@ void TacticalMapWidget::onDrawMap(QPainter& painter)
 			auto& cell = m_map.cellAt(x, y);
 			if (!cell.isObstacle)
 			{
-				QColor color = QColor(0, 255, 0, 255 * cell.value);
+				QColor color = QColor(0, 255, 0, 255 * (cell.value / limits.maxInfluence));
 				painter.fillRect(cellRect, color);
 			}
 			else

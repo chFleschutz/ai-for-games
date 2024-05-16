@@ -27,6 +27,7 @@ public slots:
 	void onInfluenceTypeLineOfSight();
 
 	void onMaxDistanceChanged(double value);
+	void onMaxInfluenceChanged(double value);
 	void onOffsetChanged(double value);
 	void onExponentChanged(double value);
 
