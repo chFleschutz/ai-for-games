@@ -25,8 +25,8 @@ public:
 	FlowFieldWidget(QWidget *parent = nullptr);
 	~FlowFieldWidget() = default;
 
-	FlowField::Coordinate pixelToCellCoord(const QPoint& pos) const;
-	FlowField::Coordinate pixelToCellCoord(const QVector2D& pos) const;
+	CellCoord pixelToCellCoord(const QPoint& pos) const;
+	CellCoord pixelToCellCoord(const QVector2D& pos) const;
 
 	const FlowField& flowField() const { return m_flowField; }
 
@@ -57,7 +57,7 @@ public slots:
 private:
 	void updateFlowField();
 	void drawCellValues(QPainter& painter);
-	void drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize);
+	void drawCosts(QPainter& painter, const FlowFieldCell& cell, float cellSize);
 	int digits(int x, int base = 10);
 	float toAngle(const QVector2D& direction);
 	void setPixelPerCell();

@@ -58,6 +58,24 @@
     <ClCompile Include="src\hillclimbing\hillclimbingwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\rqlearning\graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rqlearning\graphwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rqlearning\rqlearning.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rqlearning\rqlearningwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tactical_maps\tacticalmapwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tactical_maps\tacticalmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h">
@@ -75,6 +93,21 @@
     <ClInclude Include="src\hillclimbing\hillclimbing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\rqlearning\graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rqlearning\rqlearning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\cellfield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tactical_maps\tacticalmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tactical_maps\influencefunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\flowfield\flowfieldwidget.h">
@@ -89,6 +122,15 @@
     <QtMoc Include="src\hillclimbing\hillclimbingwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\rqlearning\rqlearningwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\rqlearning\graphwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\tactical_maps\tacticalmapwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\flowfield\flowfieldwidget.ui">
@@ -98,6 +140,12 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\hillclimbing\hillclimbingwidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\rqlearning\rqlearningwidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\tactical_maps\tacticalmapwidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

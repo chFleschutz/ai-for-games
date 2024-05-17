@@ -15,6 +15,7 @@ public slots:
 	void onShowFlowField();
 	void onShowHillClimbing();
 	void onShowRQLearning();
+	void onShowTacticalMaps();
 	void onShowDebugOutput();
 
 private:

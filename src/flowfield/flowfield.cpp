@@ -11,10 +11,7 @@ void FlowField::initialize(QImage& image)
 
 void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCountY)
 {
-	m_width = cellCountX;
-	m_height = cellCountY;
-
-	m_field.resize(m_width * m_height);
+	resize(cellCountX, cellCountY);
 
 	clearDestinations();
 	resetField();
@@ -25,10 +22,10 @@ void FlowField::initialize(QImage& image, uint32_t cellCountX, uint32_t cellCoun
 
 void FlowField::addDestination(uint32_t x, uint32_t y)
 {
-	addDestination(Coordinate{ x, y });
+	addDestination(CellCoord{ x, y });
 }
 
-void FlowField::addDestination(const Coordinate& coordinate)
+void FlowField::addDestination(const CellCoord& coordinate)
 {
 	if (coordinate.x >= m_width || coordinate.y >= m_height)
 	{
@@ -80,7 +77,7 @@ void FlowField::setNeighbors()
 				auto neighborX = x + dx[i];
 				auto neighborY = y + dy[i];
 
-				Cell* neighbor = nullptr;
+				FlowFieldCell* neighbor = nullptr;
 				if (neighborX >= 0 && neighborX < m_width && neighborY >= 0 && neighborY < m_height)
 					neighbor = &cellAt(neighborX, neighborY);
 
@@ -123,7 +120,7 @@ void FlowField::calcIntegrationField()
 {
 	// Breadth first search to calculate the cost to reach each cell from the start cell
 
-	std::deque<Cell*> openList;
+	std::deque<FlowFieldCell*> openList;
 	for (auto& dest : m_destinationPoints)
 	{
 		auto& destCell = cellAt(dest);
@@ -156,7 +153,7 @@ void FlowField::calcFlowField()
 	for (auto& cell : m_field)
 	{
 		int minCost = 255;
-		Cell::Neighbor* bestNeighbor = nullptr;
+		FlowFieldCell::Neighbor* bestNeighbor = nullptr;
 
 		for (auto& neighbor : cell.neighbors)
 		{

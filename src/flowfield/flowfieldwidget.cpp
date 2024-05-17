@@ -32,18 +32,18 @@ FlowFieldWidget::FlowFieldWidget(QWidget* parent)
 	m_frameTimer.start();
 }
 
-FlowField::Coordinate FlowFieldWidget::pixelToCellCoord(const QPoint& pos) const
+CellCoord FlowFieldWidget::pixelToCellCoord(const QPoint& pos) const
 {
 	auto posX = pos.x() / m_pixelPerCell.x();
 	auto posY = pos.y() / m_pixelPerCell.y();
-	return FlowField::Coordinate{ static_cast<uint32_t>(posX), static_cast<uint32_t>(posY) };
+	return CellCoord{ static_cast<uint32_t>(posX), static_cast<uint32_t>(posY) };
 }
 
-FlowField::Coordinate FlowFieldWidget::pixelToCellCoord(const QVector2D& pos) const
+CellCoord FlowFieldWidget::pixelToCellCoord(const QVector2D& pos) const
 {
 	auto posX = pos.x() / m_pixelPerCell.x();
 	auto posY = pos.y() / m_pixelPerCell.y();
-	return FlowField::Coordinate{ static_cast<uint32_t>(posX), static_cast<uint32_t>(posY) };
+	return CellCoord{ static_cast<uint32_t>(posX), static_cast<uint32_t>(posY) };
 }
 
 void FlowFieldWidget::onSetMap(int mapIndex)
@@ -51,7 +51,7 @@ void FlowFieldWidget::onSetMap(int mapIndex)
 	switch (mapIndex)
 	{
 	case 0:
-		m_imageWidget->renderer().load(":/assets/images/FlowfieldMap.png", size());
+		m_imageWidget->renderer().load(":/images/simplemap.png", size());
 		break;
 	default:
 		// Invalid index 
@@ -217,7 +217,7 @@ void FlowFieldWidget::drawCellValues(QPainter& painter)
 	painter.restore();
 }
 
-void FlowFieldWidget::drawCosts(QPainter& painter, const FlowField::Cell& cell, float cellSize)
+void FlowFieldWidget::drawCosts(QPainter& painter, const FlowFieldCell& cell, float cellSize)
 {
 	uint32_t displayValue = 0;
 	switch (m_showCosts)

@@ -75,19 +75,19 @@ void HillClimbingWidget::onLoadDefaultValues(int index)
 	switch (index)
 	{
 	case 0:
-		loadValues(":/assets/data_sets/random_set.txt");
+		loadValues(":/data_sets/random_set.txt");
 		break;
 	case 1:
-		loadValues(":/assets/data_sets/data_set_1.txt");
+		loadValues(":/data_sets/data_set_1.txt");
 		break;
 	case 2:
-		loadValues(":/assets/data_sets/data_set_2.txt");
+		loadValues(":/data_sets/data_set_2.txt");
 		break;
 	case 3:
-		loadValues(":/assets/data_sets/data_set_3.txt");
+		loadValues(":/data_sets/data_set_3.txt");
 		break;
 	case 4:
-		loadValues(":/assets/data_sets/data_set_4.txt");
+		loadValues(":/data_sets/data_set_4.txt");
 		break;
 	default:
 		return;
@@ -151,7 +151,7 @@ void HillClimbingWidget::loadValues(const QString& filename)
 	QFile file(filename);
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		QMessageBox::critical(this, "Error", "Could not open file");
+		QMessageBox::critical(this, "Error", "Could not open file: " + filename);
 		return;
 	}
 
