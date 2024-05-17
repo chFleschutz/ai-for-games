@@ -5,6 +5,7 @@
 #include "rqlearning/rqlearningwidget.h"
 #include "tactical_maps/tacticalmapwidget.h"
 #include "utils/debugoutputdialog.h"
+#include "tactical_maps/combinedmapswidget.h"
 
 AIMainWindow::AIMainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -30,6 +31,11 @@ void AIMainWindow::onShowRQLearning()
 void AIMainWindow::onShowTacticalMaps()
 {
 	changeCentralWidget<TacticalMapWidget>();
+}
+
+void AIMainWindow::onShowCombinedMaps()
+{
+	changeCentralWidget<CombinedMapsWidget>();
 }
 
 void AIMainWindow::onShowDebugOutput()

@@ -14,7 +14,7 @@
    <string>AI for Games</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../ressources.qrc">
+   <iconset>
     <normaloff>:/assets/images/appicon.ico</normaloff>:/assets/images/appicon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget"/>
@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDebug">
@@ -51,6 +51,7 @@
      <string>Tactical Maps</string>
     </property>
     <addaction name="actionTactical_Maps"/>
+    <addaction name="actionCombined_Maps"/>
    </widget>
    <addaction name="menuPathfinding"/>
    <addaction name="menuLearn_Algorithms"/>
@@ -81,6 +82,11 @@
   <action name="actionTactical_Maps">
    <property name="text">
     <string>Tactical Map</string>
+   </property>
+  </action>
+  <action name="actionCombined_Maps">
+   <property name="text">
+    <string>Combined Maps</string>
    </property>
   </action>
  </widget>

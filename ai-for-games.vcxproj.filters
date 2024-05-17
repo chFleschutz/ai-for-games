@@ -76,6 +76,9 @@
     <ClCompile Include="src\tactical_maps\tacticalmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tactical_maps\combinedmapswidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h">
@@ -131,6 +134,9 @@
     <QtMoc Include="src\tactical_maps\tacticalmapwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\tactical_maps\combinedmapswidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\flowfield\flowfieldwidget.ui">
@@ -146,6 +152,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\tactical_maps\tacticalmapwidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\tactical_maps\combinedmapswidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
