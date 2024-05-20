@@ -14,8 +14,8 @@
    <string>AI for Games</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/assets/images/appicon.ico</normaloff>:/assets/images/appicon.ico</iconset>
+   <iconset resource="../ressources.qrc">
+    <normaloff>:/images/appicon.ico</normaloff>:/images/appicon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDebug">
@@ -175,6 +175,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCombined_Maps</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowCombinedMaps()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onShowDebugOutput()</slot>
@@ -182,5 +198,6 @@
   <slot>onShowHillClimbing()</slot>
   <slot>onShowRQLearning()</slot>
   <slot>onShowTacticalMaps()</slot>
+  <slot>onShowCombinedMaps()</slot>
  </slots>
 </ui>

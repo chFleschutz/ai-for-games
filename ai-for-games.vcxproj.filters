@@ -79,6 +79,9 @@
     <ClCompile Include="src\tactical_maps\combinedmapswidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tactical_maps\combinedtacticalmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h">
@@ -109,6 +112,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tactical_maps\influencefunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tactical_maps\combinedtacticalmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tactical_maps\combinefunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -38,8 +38,8 @@ void TacticalMapWidget::onMapDoubleClicked(QMouseEvent* event)
 	auto percentX = pos.x() / static_cast<float>(m_imageRenderer->imageWidth());
 	auto percentY = pos.y() / static_cast<float>(m_imageRenderer->imageHeight());
 
-	auto cellX = static_cast<uint32_t>(percentX * m_map.field().width());
-	auto cellY = static_cast<uint32_t>(percentY * m_map.field().height());
+	auto cellX = static_cast<uint32_t>(percentX * m_map.width());
+	auto cellY = static_cast<uint32_t>(percentY * m_map.height());
 
 	m_map.addUnit(CellCoord{ cellX, cellY });
 	update();
@@ -87,19 +87,19 @@ void TacticalMapWidget::onShowCellValuesChanged(bool value)
 
 void TacticalMapWidget::onInfluenceTypeGlobal()
 {
-	m_map.setInfluenceType(TacticalMap::InfluenceType::Global);
+	m_map.setType(TacticalMap::Type::Global);
 	update();
 }
 
 void TacticalMapWidget::onInfluenceTypeProximity()
 {
-	m_map.setInfluenceType(TacticalMap::InfluenceType::Proximity);
+	m_map.setType(TacticalMap::Type::Proximity);
 	update();
 }
 
 void TacticalMapWidget::onInfluenceTypeLineOfSight()
 {
-	m_map.setInfluenceType(TacticalMap::InfluenceType::LineOfSight);
+	m_map.setType(TacticalMap::Type::LineOfSight);
 	update();
 }
 
@@ -161,15 +161,15 @@ void TacticalMapWidget::onClearUnits()
 
 void TacticalMapWidget::onDrawMap(QPainter& painter)
 {
-	float pixelPerCellX = m_imageRenderer->imageWidth() / static_cast<float>(m_map.field().width());
-	float pixelPerCellY = m_imageRenderer->imageHeight() / static_cast<float>(m_map.field().height());
+	float pixelPerCellX = m_imageRenderer->imageWidth() / static_cast<float>(m_map.width());
+	float pixelPerCellY = m_imageRenderer->imageHeight() / static_cast<float>(m_map.height());
 
 	auto& limits = m_map.influenceLimits();
 
 	// Draw the tactical map
-	for (uint32_t y = 0; y < m_map.field().height(); ++y)
+	for (uint32_t y = 0; y < m_map.height(); ++y)
 	{
-		for (uint32_t x = 0; x < m_map.field().width(); ++x)
+		for (uint32_t x = 0; x < m_map.width(); ++x)
 		{
 			auto cellX = x * pixelPerCellX + (pixelPerCellX * 0.5f);
 			auto cellY = y * pixelPerCellY + (pixelPerCellY * 0.5f);
@@ -179,10 +179,10 @@ void TacticalMapWidget::onDrawMap(QPainter& painter)
 
 			const QRect cellRect(cellX - (cellWidth * 0.5f), cellY - (cellHeight * 0.5f), cellWidth, cellHeight);
 
-			auto& cell = m_map.cellAt(x, y);
-			if (!cell.isObstacle)
+			auto cellValue = m_map.valueAt(x, y);
+			if (cellValue >= 0.0f)
 			{
-				QColor color = QColor(0, 255, 0, 255 * (cell.value / limits.maxInfluence));
+				QColor color = QColor(0, 255, 0, 255 * (cellValue / limits.maxInfluence));
 				painter.fillRect(cellRect, color);
 			}
 			else
@@ -193,7 +193,7 @@ void TacticalMapWidget::onDrawMap(QPainter& painter)
 			if (m_showCellValues)
 			{
 				painter.setPen(Qt::black);
-				painter.drawText(cellRect, Qt::AlignCenter, QString::number(cell.value, 'f', 2));
+				painter.drawText(cellRect, Qt::AlignCenter, QString::number(cellValue, 'f', 2));
 			}
 		}
 	}

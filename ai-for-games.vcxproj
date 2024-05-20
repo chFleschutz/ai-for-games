@@ -108,6 +108,7 @@
     <ClCompile Include="src\rqlearning\rqlearning.cpp" />
     <ClCompile Include="src\rqlearning\rqlearningwidget.cpp" />
     <ClCompile Include="src\tactical_maps\combinedmapswidget.cpp" />
+    <ClCompile Include="src\tactical_maps\combinedtacticalmap.cpp" />
     <ClCompile Include="src\tactical_maps\tacticalmap.cpp" />
     <ClCompile Include="src\tactical_maps\tacticalmapwidget.cpp" />
     <ClCompile Include="src\utils\imagerendererwidget.cpp" />
@@ -137,6 +138,8 @@
     <ClInclude Include="src\rqlearning\rqlearning.h" />
     <QtMoc Include="src\tactical_maps\tacticalmapwidget.h" />
     <QtMoc Include="src\tactical_maps\combinedmapswidget.h" />
+    <ClInclude Include="src\tactical_maps\combinedtacticalmap.h" />
+    <ClInclude Include="src\tactical_maps\combinefunction.h" />
     <ClInclude Include="src\tactical_maps\influencefunctions.h" />
     <ClInclude Include="src\tactical_maps\tacticalmap.h" />
     <ClInclude Include="src\utils\cellfield.h" />

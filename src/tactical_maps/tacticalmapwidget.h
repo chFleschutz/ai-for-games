@@ -1,9 +1,10 @@
 #pragma once
 
-#include <QWidget>
-#include "ui_tacticalmapwidget.h"
 #include "tactical_maps/tacticalmap.h"
+#include "ui_tacticalmapwidget.h"
 #include "utils/imagerendererwidget.h"
+
+#include <QWidget>
 
 class TacticalMapWidget : public QWidget
 {
