@@ -17,7 +17,7 @@ TacticalMapWidget::TacticalMapWidget(QWidget* parent)
 	ui.cellSize_slider->setValue(m_cellSize * 100);
 
 	ui.global_radioButton->setChecked(true);
-	ui.millington_radioButton->setChecked(true);
+	ui.bichlmeier_radioButton->setChecked(true);
 
 	auto& limits = m_map.influenceLimits();
 	ui.maxDis_spinBox->setValue(limits.maxDistance);

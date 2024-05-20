@@ -51,12 +51,15 @@ public slots:
 
 	void onDrawMap(QPainter& painter);
 	void onImageDoubleClicked(QMouseEvent* event);
+	void onImageResize(QResizeEvent* event);
 
 private:
-	QPoint pixelPos(CellCoord coord, float pixelPerCellX, float pixelPerCellY) const;
-	QRect cellRect(CellCoord coord, float pixelPerCellX, float pixelPerCellY) const;
-	void drawUnits(QPainter& painter, float pixelPerCellX, float pixelPerCellY);
+	QPoint pixelPos(CellCoord coord) const;
+	QRect cellRect(CellCoord coord) const;
+	void drawCells(QPainter& painter);
+	void drawUnits(QPainter& painter);
 	void setupMaps();
+	// Querys for the currently selectd map
 	TacticalMapBase* currentMap();
 	QColor currentColor();
 
@@ -71,6 +74,7 @@ private:
 	bool m_showEnemyUnits = true;
 	MapType m_currentMap = MapType::Combined;
 	UnitType m_currentUnit = UnitType::Friendly;
+	QPointF m_pixelPerCell;
 
 	// Map containing all maps
 	CombinedTacticalMap m_combinedMap;
@@ -81,8 +85,4 @@ private:
 	std::shared_ptr<TacticalMap> m_enemyProximityMap;
 	std::shared_ptr<TacticalMap> m_visibilityMap;
 	std::shared_ptr<TacticalMap> m_distanceMap;
-
-	QColor m_colorSecurity = QColor(0, 0, 255);
-	QColor m_colorVisibility = QColor(255, 0, 0);
-	QColor m_colorDistance = QColor(0, 255, 0);
 };

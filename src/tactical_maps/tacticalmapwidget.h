@@ -44,7 +44,7 @@ private:
 	ImageRendererWidget* m_imageRenderer = nullptr;
 
 	TacticalMap m_map;
-	int m_cellCount = 20;
+	int m_cellCount = 30;
 	float m_cellSize = 0.9f;
 	bool m_showCellValues = false;
 

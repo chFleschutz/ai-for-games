@@ -15,6 +15,7 @@ CombinedMapsWidget::CombinedMapsWidget(QWidget* parent)
 
 	connect(m_imageRenderer, &ImageRendererWidget::onPaintEvent, this, &CombinedMapsWidget::onDrawMap, Qt::DirectConnection);
 	connect(m_imageRenderer, &ImageRendererWidget::onDoubleClicked, this, &CombinedMapsWidget::onImageDoubleClicked, Qt::DirectConnection);
+	connect(m_imageRenderer, &ImageRendererWidget::onResized, this, &CombinedMapsWidget::onImageResize, Qt::DirectConnection);
 
 	setupMaps();
 	onMapIndexChanged(0);
@@ -37,6 +38,7 @@ void CombinedMapsWidget::onMapIndexChanged(int index)
 	}
 
 	m_combinedMap.resize(renderer.image(), m_cellCount, m_cellCount);
+	m_imageRenderer->resize(size());
 	update();
 }
 
@@ -125,24 +127,69 @@ void CombinedMapsWidget::onClearUnits()
 
 void CombinedMapsWidget::onDrawMap(QPainter& painter)
 {
+	drawCells(painter);
+	drawUnits(painter);
+}
+
+void CombinedMapsWidget::onImageDoubleClicked(QMouseEvent* event)
+{
+	auto percentX = event->pos().x() / static_cast<float>(m_imageRenderer->imageWidth());
+	auto percentY = event->pos().y() / static_cast<float>(m_imageRenderer->imageHeight());
+	CellCoord cellCoord{ static_cast<uint32_t>(percentX * m_cellCount), static_cast<uint32_t>(percentY * m_cellCount) };
+
+	switch (m_currentUnit)
+	{
+	default:
+	case CombinedMapsWidget::UnitType::Friendly:
+		m_friendlyProximityMap->addUnit(cellCoord);
+		break;
+	case CombinedMapsWidget::UnitType::Enemy:
+		m_distanceMap->addUnit(cellCoord);
+		m_enemyProximityMap->addUnit(cellCoord);
+		break;
+	}
+
+	update();
+}
+
+void CombinedMapsWidget::onImageResize(QResizeEvent* event)
+{
+	float pixelPerCellX = m_imageRenderer->imageWidth() / static_cast<float>(m_cellCount);
+	float pixelPerCellY = m_imageRenderer->imageHeight() / static_cast<float>(m_cellCount);
+	m_pixelPerCell = QPointF(pixelPerCellX, pixelPerCellY);
+}
+
+QPoint CombinedMapsWidget::pixelPos(CellCoord coord) const
+{
+	auto cellX = coord.x * m_pixelPerCell.x() + (m_pixelPerCell.x() * 0.5f);
+	auto cellY = coord.y * m_pixelPerCell.y() + (m_pixelPerCell.y() * 0.5f);
+	return QPoint(cellX, cellY);
+}
+
+QRect CombinedMapsWidget::cellRect(CellCoord coord) const
+{
+	float cellX = coord.x * m_pixelPerCell.x() + (m_pixelPerCell.x() * 0.5f);
+	float cellY = coord.y * m_pixelPerCell.y() + (m_pixelPerCell.y() * 0.5f);
+	float cellWidth = m_pixelPerCell.x() * m_cellSize;
+	float cellHeight = m_pixelPerCell.y() * m_cellSize;
+	return QRect(cellX - (cellWidth * 0.5f), cellY - (cellHeight * 0.5f), cellWidth, cellHeight);
+}
+
+void CombinedMapsWidget::drawCells(QPainter& painter)
+{
 	auto map = currentMap();
 	auto color = currentColor();
 
 	Q_ASSERT_X(map, "CombinedMapsWidget::onDrawMap", "Current map is not valid");
 
-	float pixelPerCellX = m_imageRenderer->imageWidth() / static_cast<float>(m_cellCount);
-	float pixelPerCellY = m_imageRenderer->imageHeight() / static_cast<float>(m_cellCount);
-
 	CellCoord maxCell{};
 	float maxValue = 0.0f;
-
-	// Draw the tactical map
 	for (uint32_t y = 0; y < m_cellCount; ++y)
 	{
 		for (uint32_t x = 0; x < m_cellCount; ++x)
 		{
 			CellCoord coord{ x, y };
-			auto rect = cellRect(coord, pixelPerCellX, pixelPerCellY);
+			auto rect = cellRect(coord);
 
 			if (map->isObstacle(x, y))
 			{
@@ -170,54 +217,13 @@ void CombinedMapsWidget::onDrawMap(QPainter& painter)
 
 	if (m_showMaxValue)
 	{
-		auto rect = cellRect(maxCell, pixelPerCellX, pixelPerCellY);
-		QPen pen(Qt::red);
-		pen.setWidth(2);
 		painter.setRenderHint(QPainter::RenderHint::Antialiasing);
-		painter.setPen(pen);
-		painter.drawRect(rect);
+		painter.setPen(QPen(Qt::red, 2));
+		painter.drawRect(cellRect(maxCell));
 	}
-
-	drawUnits(painter, pixelPerCellX, pixelPerCellY);
 }
 
-void CombinedMapsWidget::onImageDoubleClicked(QMouseEvent* event)
-{
-	auto percentX = event->pos().x() / static_cast<float>(m_imageRenderer->imageWidth());
-	auto percentY = event->pos().y() / static_cast<float>(m_imageRenderer->imageHeight());
-	CellCoord cellCoord{ static_cast<uint32_t>(percentX * m_cellCount), static_cast<uint32_t>(percentY * m_cellCount) };
-
-	switch (m_currentUnit)
-	{
-	default:
-	case CombinedMapsWidget::UnitType::Friendly:
-		m_friendlyProximityMap->addUnit(cellCoord);
-		break;
-	case CombinedMapsWidget::UnitType::Enemy:
-		m_distanceMap->addUnit(cellCoord);
-		m_enemyProximityMap->addUnit(cellCoord);
-		break;
-	}
-
-	update();
-}
-
-QPoint CombinedMapsWidget::pixelPos(CellCoord coord, float pixelPerCellX, float pixelPerCellY) const
-{
-	auto cellX = coord.x * pixelPerCellX + (pixelPerCellX * 0.5f);
-	auto cellY = coord.y * pixelPerCellY + (pixelPerCellY * 0.5f);
-	return QPoint(cellX, cellY);
-}
-
-QRect CombinedMapsWidget::cellRect(CellCoord coord, float pixelPerCellX, float pixelPerCellY) const
-{
-	auto cellPos = pixelPos(coord, pixelPerCellX, pixelPerCellY);
-	auto cellWidth = pixelPerCellX * m_cellSize;
-	auto cellHeight = pixelPerCellY * m_cellSize;
-	return QRect(cellPos.x() - (cellWidth * 0.5f), cellPos.y() - (cellHeight * 0.5f), cellWidth, cellHeight);
-}
-
-void CombinedMapsWidget::drawUnits(QPainter& painter, float pixelPerCellX, float pixelPerCellY)
+void CombinedMapsWidget::drawUnits(QPainter& painter)
 {
 	int unitSize = 4;
 	painter.setRenderHint(QPainter::RenderHint::Antialiasing);
@@ -228,7 +234,7 @@ void CombinedMapsWidget::drawUnits(QPainter& painter, float pixelPerCellX, float
 		painter.setBrush(QBrush(Qt::green));
 		for (const auto& unit : m_friendlyProximityMap->units())
 		{
-			auto pos = pixelPos(unit, pixelPerCellX, pixelPerCellY);
+			auto pos = pixelPos(unit);
 			painter.drawEllipse(pos, unitSize, unitSize);
 		}
 	}
@@ -238,7 +244,7 @@ void CombinedMapsWidget::drawUnits(QPainter& painter, float pixelPerCellX, float
 		painter.setBrush(QBrush(Qt::red));
 		for (const auto& unit : m_enemyProximityMap->units())
 		{
-			auto pos = pixelPos(unit, pixelPerCellX, pixelPerCellY);
+			auto pos = pixelPos(unit);
 			painter.drawEllipse(pos, unitSize, unitSize);
 		}
 	}
