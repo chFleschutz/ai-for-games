@@ -101,6 +101,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ballistic_prediction\ballisticpredictionwidget.cpp" />
     <ClCompile Include="src\flowfield\flowfieldagent.cpp" />
     <ClCompile Include="src\hillclimbing\hillclimbingwidget.cpp" />
     <ClCompile Include="src\rqlearning\graph.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="src\flowfield\flowfield.cpp" />
     <ClCompile Include="src\flowfield\flowfieldwidget.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <QtUic Include="src\ballistic_prediction\ballisticpredictionwidget.ui" />
     <QtUic Include="src\flowfield\flowfieldwidget.ui" />
     <QtUic Include="src\hillclimbing\hillclimbingwidget.ui" />
     <QtUic Include="src\rqlearning\rqlearningwidget.ui" />
@@ -128,6 +130,7 @@
     <QtUic Include="src\utils\debugoutputdialog.ui" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\ballistic_prediction\ballisticpredictionwidget.h" />
     <ClInclude Include="src\flowfield\flowfield.h" />
     <ClInclude Include="src\flowfield\flowfieldagent.h" />
     <QtMoc Include="src\hillclimbing\hillclimbingwidget.h" />
