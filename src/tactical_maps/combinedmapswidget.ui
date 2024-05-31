@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CombinedMapsWidgetClass</class>
+ <widget class="QWidget" name="CombinedMapsWidgetClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>777</width>
+    <height>580</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CombinedMapsWidget</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="ImageRendererWidget" name="imageRenderer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="map_groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Map</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0" colspan="2">
+         <widget class="QComboBox" name="map_comboBox">
+          <item>
+           <property name="text">
+            <string>Simple Map</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Obstacles</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QCheckBox" name="showEnemy_checkBox">
+          <property name="text">
+           <string>Show Enemy Units</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QCheckBox" name="showFriendly_checkBox">
+          <property name="text">
+           <string>Show Friendly Units</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="mapSize_label">
+          <property name="text">
+           <string>Map Size</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="mapSize_spinBox">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QCheckBox" name="values_checkBox">
+          <property name="text">
+           <string>Show Cell Values</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="maxValue_checkBox">
+          <property name="text">
+           <string>Show Max Value</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="type_groupBox">
+       <property name="title">
+        <string>Show Map</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="combined_radioButton">
+          <property name="text">
+           <string>Combined</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QRadioButton" name="enemyProx_radioButton">
+          <property name="text">
+           <string>Enemy Proximity</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QRadioButton" name="security_radioButton">
+          <property name="text">
+           <string>Security</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="visibility_radioButton">
+          <property name="text">
+           <string>Visibility</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="friendlyProx_radioButton">
+          <property name="text">
+           <string>Friendly Proximity</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="distance_radioButton">
+          <property name="text">
+           <string>Distance</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="unit_groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Units</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="2" column="0">
+         <widget class="QPushButton" name="clear_pushButton">
+          <property name="text">
+           <string>Clear Units</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="friendlyUnit_radioButton">
+          <property name="text">
+           <string>Friendly</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="enemyUnit_radioButton">
+          <property name="text">
+           <string>Enemy</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ImageRendererWidget</class>
+   <extends>QWidget</extends>
+   <header>utils/imagerendererwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>security_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowSecurityMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>692</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>559</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>visibility_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowVisibilityMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>608</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>distance_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowDistanceMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>576</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>555</x>
+     <y>293</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>map_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onMapIndexChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>668</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>605</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mapSize_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onCellCountChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>713</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>609</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>values_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowCellValuesChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>704</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>608</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>combined_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowCombinedMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>605</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>541</x>
+     <y>240</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>friendlyProx_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowFriendlyProximityMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>615</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>544</x>
+     <y>346</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enemyProx_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowEnemyProximityMap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>628</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>561</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>friendlyUnit_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onSetFriendlyUnit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>625</x>
+     <y>440</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>565</x>
+     <y>432</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enemyUnit_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onSetEnemyUnit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>667</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>555</x>
+     <y>460</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clear_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onClearUnits()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>612</x>
+     <y>488</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>maxValue_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowMaxValueChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>610</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>560</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showFriendly_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowFriendlyChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>602</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>559</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showEnemy_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CombinedMapsWidgetClass</receiver>
+   <slot>onShowEnemyChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>559</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onShowSecurityMap()</slot>
+  <slot>onShowVisibilityMap()</slot>
+  <slot>onShowDistanceMap()</slot>
+  <slot>onMapIndexChanged(int)</slot>
+  <slot>onCellCountChanged(int)</slot>
+  <slot>onShowCellValuesChanged(bool)</slot>
+  <slot>onShowCombinedMap()</slot>
+  <slot>onShowFriendlyProximityMap()</slot>
+  <slot>onShowEnemyProximityMap()</slot>
+  <slot>onSetFriendlyUnit()</slot>
+  <slot>onSetEnemyUnit()</slot>
+  <slot>onClearUnits()</slot>
+  <slot>onShowMaxValueChanged(bool)</slot>
+  <slot>onShowFriendlyChanged(bool)</slot>
+  <slot>onShowEnemyChanged(bool)</slot>
+ </slots>
+</ui>

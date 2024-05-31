@@ -1,9 +1,10 @@
 #pragma once
 
-#include <QWidget>
-#include "ui_tacticalmapwidget.h"
 #include "tactical_maps/tacticalmap.h"
+#include "ui_tacticalmapwidget.h"
 #include "utils/imagerendererwidget.h"
+
+#include <QWidget>
 
 class TacticalMapWidget : public QWidget
 {
@@ -43,7 +44,7 @@ private:
 	ImageRendererWidget* m_imageRenderer = nullptr;
 
 	TacticalMap m_map;
-	int m_cellCount = 20;
+	int m_cellCount = 30;
 	float m_cellSize = 0.9f;
 	bool m_showCellValues = false;
 

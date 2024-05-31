@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../ressources.qrc">
-    <normaloff>:/assets/images/appicon.ico</normaloff>:/assets/images/appicon.ico</iconset>
+    <normaloff>:/images/appicon.ico</normaloff>:/images/appicon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -51,6 +51,7 @@
      <string>Tactical Maps</string>
     </property>
     <addaction name="actionTactical_Maps"/>
+    <addaction name="actionCombined_Maps"/>
    </widget>
    <addaction name="menuPathfinding"/>
    <addaction name="menuLearn_Algorithms"/>
@@ -81,6 +82,11 @@
   <action name="actionTactical_Maps">
    <property name="text">
     <string>Tactical Map</string>
+   </property>
+  </action>
+  <action name="actionCombined_Maps">
+   <property name="text">
+    <string>Combined Maps</string>
    </property>
   </action>
  </widget>
@@ -169,6 +175,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCombined_Maps</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowCombinedMaps()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onShowDebugOutput()</slot>
@@ -176,5 +198,6 @@
   <slot>onShowHillClimbing()</slot>
   <slot>onShowRQLearning()</slot>
   <slot>onShowTacticalMaps()</slot>
+  <slot>onShowCombinedMaps()</slot>
  </slots>
 </ui>

@@ -5,9 +5,10 @@
 
 struct CellCoord
 {
-	uint32_t x;
-	uint32_t y;
+	uint32_t x = 0;
+	uint32_t y = 0;
 
+	CellCoord() = default;
 	CellCoord(uint32_t xCoord, uint32_t yCoord) : x(xCoord), y(yCoord) {}
 
 	static float distance(const CellCoord& a, const CellCoord& b)
