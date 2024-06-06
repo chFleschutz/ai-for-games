@@ -133,7 +133,6 @@
   <ItemGroup>
     <QtMoc Include="src\ballistic_prediction\ballisticpredictionwidget.h" />
     <QtMoc Include="src\ballistic_prediction\ballisticsimwidget.h" />
-    <ClInclude Include="src\ballistic_prediction\ballisticprediction.h" />
     <ClInclude Include="src\flowfield\flowfield.h" />
     <ClInclude Include="src\flowfield\flowfieldagent.h" />
     <QtMoc Include="src\hillclimbing\hillclimbingwidget.h" />

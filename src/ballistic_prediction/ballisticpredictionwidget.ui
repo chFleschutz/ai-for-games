@@ -14,9 +14,6 @@
    <string>BallisticPredictionWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="BallisticSimWidget" name="ballisticSim_widget" native="true"/>
-   </item>
    <item row="0" column="1">
     <widget class="QGroupBox" name="settings">
      <property name="sizePolicy">
@@ -29,6 +26,9 @@
       <string>Settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="pixelPerMeter_doubleSpinBox"/>
+      </item>
       <item row="0" column="1">
        <widget class="QDoubleSpinBox" name="gravity_doubleSpinBox">
         <property name="singleStep">
@@ -50,6 +50,13 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="pixelPerMeter_label">
+        <property name="text">
+         <string>Pixel per Meter</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QDoubleSpinBox" name="launchSpeed_doubleSpinBox">
         <property name="maximum">
@@ -60,21 +67,31 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="2">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Freeze Simulation</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
      </layout>
     </widget>
+   </item>
+   <item row="1" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" rowspan="2">
+    <widget class="BallisticSimWidget" name="ballisticSim_widget" native="true"/>
    </item>
   </layout>
  </widget>
@@ -88,6 +105,8 @@
    <slots>
     <slot>setGravity(double)</slot>
     <slot>setLaunchSpeedScale(double)</slot>
+    <slot>setPixelPerMeter(double)</slot>
+    <slot>setFreezeSimulation(bool)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -101,11 +120,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>557</x>
-     <y>147</y>
+     <y>49</y>
     </hint>
     <hint type="destinationlabel">
-     <x>351</x>
-     <y>148</y>
+     <x>358</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -117,11 +136,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>544</x>
-     <y>271</y>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
-     <x>402</x>
-     <y>272</y>
+     <x>389</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pixelPerMeter_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>ballisticSim_widget</receiver>
+   <slot>setPixelPerMeter(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>542</x>
+     <y>112</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>ballisticSim_widget</receiver>
+   <slot>setFreezeSimulation(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>473</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>140</y>
     </hint>
    </hints>
   </connection>
