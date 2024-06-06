@@ -13,8 +13,117 @@
   <property name="windowTitle">
    <string>BallisticPredictionWidget</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="BallisticSimWidget" name="ballisticSim_widget" native="true"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="settings">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Settings</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QDoubleSpinBox" name="gravity_doubleSpinBox">
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="launchSpeed_label">
+        <property name="text">
+         <string>Launch Speed</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="gravity_label">
+        <property name="text">
+         <string>Gravity</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="launchSpeed_doubleSpinBox">
+        <property name="maximum">
+         <double>10.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>BallisticSimWidget</class>
+   <extends>QWidget</extends>
+   <header>ballistic_prediction/ballisticsimwidget.h</header>
+   <container>1</container>
+   <slots>
+    <slot>setGravity(double)</slot>
+    <slot>setLaunchSpeedScale(double)</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>gravity_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>ballisticSim_widget</receiver>
+   <slot>setGravity(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>557</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>launchSpeed_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>ballisticSim_widget</receiver>
+   <slot>setLaunchSpeedScale(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>544</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

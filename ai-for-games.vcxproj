@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ballistic_prediction\ballisticpredictionwidget.cpp" />
+    <ClCompile Include="src\ballistic_prediction\ballisticsimwidget.cpp" />
     <ClCompile Include="src\flowfield\flowfieldagent.cpp" />
     <ClCompile Include="src\hillclimbing\hillclimbingwidget.cpp" />
     <ClCompile Include="src\rqlearning\graph.cpp" />
@@ -131,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\ballistic_prediction\ballisticpredictionwidget.h" />
+    <QtMoc Include="src\ballistic_prediction\ballisticsimwidget.h" />
+    <ClInclude Include="src\ballistic_prediction\ballisticprediction.h" />
     <ClInclude Include="src\flowfield\flowfield.h" />
     <ClInclude Include="src\flowfield\flowfieldagent.h" />
     <QtMoc Include="src\hillclimbing\hillclimbingwidget.h" />

@@ -82,6 +82,12 @@
     <ClCompile Include="src\tactical_maps\combinedtacticalmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ballistic_prediction\ballisticpredictionwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ballistic_prediction\ballisticsimwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\flowfield\flowfield.h">
@@ -120,6 +126,9 @@
     <ClInclude Include="src\tactical_maps\combinefunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ballistic_prediction\ballisticprediction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\flowfield\flowfieldwidget.h">
@@ -146,6 +155,12 @@
     <QtMoc Include="src\tactical_maps\combinedmapswidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\ballistic_prediction\ballisticpredictionwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ballistic_prediction\ballisticsimwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\flowfield\flowfieldwidget.ui">
@@ -164,6 +179,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\tactical_maps\combinedmapswidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\ballistic_prediction\ballisticpredictionwidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
