@@ -6,6 +6,7 @@
 #include "tactical_maps/tacticalmapwidget.h"
 #include "utils/debugoutputdialog.h"
 #include "tactical_maps/combinedmapswidget.h"
+#include "ballistic_prediction/ballisticpredictionwidget.h"
 
 AIMainWindow::AIMainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -36,6 +37,11 @@ void AIMainWindow::onShowTacticalMaps()
 void AIMainWindow::onShowCombinedMaps()
 {
 	changeCentralWidget<CombinedMapsWidget>();
+}
+
+void AIMainWindow::onShowBallisticPrediction()
+{
+	changeCentralWidget<BallisticPredictionWidget>();
 }
 
 void AIMainWindow::onShowDebugOutput()

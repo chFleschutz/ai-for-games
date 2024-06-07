@@ -17,6 +17,7 @@ public slots:
 	void onShowRQLearning();
 	void onShowTacticalMaps();
 	void onShowCombinedMaps();
+	void onShowBallisticPrediction();
 
 	void onShowDebugOutput();
 

@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDebug">
@@ -53,9 +53,16 @@
     <addaction name="actionTactical_Maps"/>
     <addaction name="actionCombined_Maps"/>
    </widget>
+   <widget class="QMenu" name="menuBallistic_Prediction">
+    <property name="title">
+     <string>Ballistic Prediction</string>
+    </property>
+    <addaction name="actionBallistic_Prediction"/>
+   </widget>
    <addaction name="menuPathfinding"/>
    <addaction name="menuLearn_Algorithms"/>
    <addaction name="menuTactical_Maps"/>
+   <addaction name="menuBallistic_Prediction"/>
    <addaction name="menuDebug"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -87,6 +94,11 @@
   <action name="actionCombined_Maps">
    <property name="text">
     <string>Combined Maps</string>
+   </property>
+  </action>
+  <action name="actionBallistic_Prediction">
+   <property name="text">
+    <string>Ballistic Prediction</string>
    </property>
   </action>
  </widget>
@@ -191,6 +203,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionBallistic_Prediction</sender>
+   <signal>triggered()</signal>
+   <receiver>AIMainWindowClass</receiver>
+   <slot>onShowBallisticPrediction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onShowDebugOutput()</slot>
@@ -199,5 +227,6 @@
   <slot>onShowRQLearning()</slot>
   <slot>onShowTacticalMaps()</slot>
   <slot>onShowCombinedMaps()</slot>
+  <slot>onShowBallisticPrediction()</slot>
  </slots>
 </ui>
