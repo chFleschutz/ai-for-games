@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>587</height>
+    <width>939</width>
+    <height>864</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -257,10 +257,17 @@
         <string>Units</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QPushButton" name="pushButton">
           <property name="text">
            <string>Clear Units</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Double Click to place units</string>
           </property>
          </widget>
         </item>

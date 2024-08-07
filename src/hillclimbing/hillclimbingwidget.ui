@@ -17,7 +17,7 @@
    <item row="0" column="1">
     <widget class="QGroupBox" name="dataSet_group">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -74,11 +74,39 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0" rowspan="3">
-    <widget class="QChartView" name="chartView"/>
+   <item row="2" column="1">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Description</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>The algorithm tries to find a maximum by starting at the red vertical line. The found maximum is indicated by the second red dot. </string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item row="1" column="1">
     <widget class="QGroupBox" name="hillClimbing_group">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Hill Climbing</string>
      </property>
@@ -148,7 +176,14 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="4" column="0">
+    <widget class="QSlider" name="start_slider">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -161,12 +196,8 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="0">
-    <widget class="QSlider" name="start_slider">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
+   <item row="0" column="0" rowspan="4">
+    <widget class="QChartView" name="chartView"/>
    </item>
   </layout>
  </widget>

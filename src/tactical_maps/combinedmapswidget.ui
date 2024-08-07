@@ -35,7 +35,7 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>Map</string>
+        <string>Map Settings</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0" colspan="2">
@@ -103,7 +103,7 @@
      <item>
       <widget class="QGroupBox" name="type_groupBox">
        <property name="title">
-        <string>Show Map</string>
+        <string>Displayed Map</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
@@ -163,13 +163,6 @@
         <string>Units</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="2" column="0">
-         <widget class="QPushButton" name="clear_pushButton">
-          <property name="text">
-           <string>Clear Units</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QRadioButton" name="friendlyUnit_radioButton">
           <property name="text">
@@ -181,6 +174,20 @@
          <widget class="QRadioButton" name="enemyUnit_radioButton">
           <property name="text">
            <string>Enemy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="clear_pushButton">
+          <property name="text">
+           <string>Clear Units</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Double Click to place units</string>
           </property>
          </widget>
         </item>

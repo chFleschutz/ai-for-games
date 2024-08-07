@@ -78,16 +78,16 @@ void HillClimbingWidget::onLoadDefaultValues(int index)
 		loadValues(":/data_sets/random_set.txt");
 		break;
 	case 1:
-		loadValues(":/data_sets/data_set_1.txt");
+		loadValues(":/data_sets/data_set1.txt");
 		break;
 	case 2:
-		loadValues(":/data_sets/data_set_2.txt");
+		loadValues(":/data_sets/data_set2.txt");
 		break;
 	case 3:
-		loadValues(":/data_sets/data_set_3.txt");
+		loadValues(":/data_sets/data_set3.txt");
 		break;
 	case 4:
-		loadValues(":/data_sets/data_set_4.txt");
+		loadValues(":/data_sets/data_set4.txt");
 		break;
 	default:
 		return;
