@@ -1,7 +1,7 @@
 # AI for Games  
 
-This repository contains exercise code developed as part of the "AI for Games - Advanced Topics" course, displaying practical implementations of AI algorithms in game development scenarios. 
-The Algorithms are visualized using the Qt-Framework.
+This repository contains example implementations for several AI algorithms used in game development scenarios.
+The algorithms are visualized using the Qt-Framework.
 
 Currently featured Topics are:
 
